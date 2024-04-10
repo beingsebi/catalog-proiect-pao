@@ -5,35 +5,25 @@ import shared.Constants.Gender;
 
 import java.time.LocalDate;
 
-public class Student extends Person {
+public class Student extends Person implements Comparable<Student> {
     private static int nextStudentId = 0;
 
     private final int studentId;
     private int yearOfStudy;
-    private Person supervisor;
 
-
-    public Student(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString, int yearOfStudy, Person supervisor) {
+    public Student(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString, int yearOfStudy) {
         super(firstName, lastName, dateOfBirth, address, email, gender, phoneString);
         this.studentId = nextStudentId++;
         this.yearOfStudy = yearOfStudy;
-        this.supervisor = supervisor;
     }
 
-    @SuppressWarnings("unused")
-    public Student(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString, int yearOfStudy) {
-        this(firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearOfStudy, null);
-    }
-
-
-    @SuppressWarnings("unused")
-    public Person getSupervisor() {
-        return supervisor;
-    }
-
-    @SuppressWarnings("unused")
-    public void setSupervisor(Person supervisor) {
-        this.supervisor = supervisor;
+    @Override
+    public int compareTo(Student o) {
+        int aux = this.getLastName().compareTo(o.getLastName());
+        if (aux != 0) {
+            return aux;
+        }
+        return this.getFirstName().compareTo(o.getFirstName());
     }
 
     @SuppressWarnings("unused")
@@ -56,7 +46,6 @@ public class Student extends Person {
         return "Student{" +
                 "studentId=" + studentId +
                 ", yearOfStudy=" + yearOfStudy +
-                ", supervisor=" + supervisor +
                 "} " + super.toString();
     }
 }
