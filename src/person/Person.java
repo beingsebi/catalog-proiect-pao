@@ -40,6 +40,13 @@ public class Person {
         return lastName;
     }
 
+    /**
+     * Sets the last name of this Person.
+     * If you call this for a student, you might want to call ClassRoom.reorderStudents() after
+     * calling this method for all the classrooms in which this person is a student.
+     *
+     * @param lastName the new last name of this Person
+     */
     @SuppressWarnings("unused")
     public void setLastName(String lastName) {
         this.lastName = lastName;

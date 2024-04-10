@@ -22,10 +22,21 @@ public class Classroom {
         this.classroomId = nextClassroomId++;
         this.year = year;
         this.symbol = symbol;
-        this.students = new TreeSet<Student>();
+        this.students = new TreeSet<>();
         this.students.addAll(students);
         this.supervisor = supervisor;
 
+    }
+
+    @Override
+    public String toString() {
+        return "Classroom{" +
+                "classroomId=" + classroomId +
+                ", year=" + year +
+                ", symbol='" + symbol + '\'' +
+                ", students=" + students +
+                ", supervisor=" + supervisor +
+                '}';
     }
 
     @SuppressWarnings("unused")
@@ -73,8 +84,42 @@ public class Classroom {
         this.supervisor = supervisor;
     }
 
-    @Override
-    public String toString() {
-        return "Classroom{" + "classroomId=" + classroomId + ", year=" + year + ", symbol='" + symbol + '\'' + ", students=" + students + ", supervisor=" + supervisor + '}';
+    @SuppressWarnings("unused")
+    public void reorderStudents() {
+        TreeSet<Student> newStudents = new TreeSet<>();
+        newStudents.addAll(students);
+        students = newStudents;
+    }
+
+    @SuppressWarnings("unused")
+    public void addStudent(Student student) {
+        students.add(student);
+    }
+
+    @SuppressWarnings("unused")
+    public void removeStudent(Student student) {
+        students.remove(student);
+    }
+
+    @SuppressWarnings("unused")
+    public void populateClass(Collection<Student> students) {
+        this.students.addAll(students);
+    }
+
+    @SuppressWarnings("unused")
+    public void clearStudents() {
+        students.clear();
+    }
+
+    @SuppressWarnings("unused")
+    public void transferStudents(Classroom classroom) {
+        if (this == classroom) {
+            return;
+        }
+        if (this.students == null) {
+            this.students = new TreeSet<>();
+        }
+        students.addAll(classroom.students);
+        classroom.students.clear();
     }
 }

@@ -19,11 +19,11 @@ public class Student extends Person implements Comparable<Student> {
 
     @Override
     public int compareTo(Student o) {
-        int aux = this.getLastName().compareTo(o.getLastName());
+        int aux = this.getLastName().toLowerCase().compareTo(o.getLastName().toLowerCase());
         if (aux != 0) {
             return aux;
         }
-        return this.getFirstName().compareTo(o.getFirstName());
+        return this.getFirstName().toLowerCase().compareTo(o.getFirstName().toLowerCase());
     }
 
     @SuppressWarnings("unused")

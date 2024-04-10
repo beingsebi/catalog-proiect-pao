@@ -1,3 +1,4 @@
+import catalogue.Catalogue;
 import classroom.Classroom;
 import course.Course;
 import person.Person;
@@ -18,6 +19,7 @@ public class Main {
         Teacher teacher = new Teacher("ana", "pop", LocalDate.now(), "adr", "em", Constants.Gender.FEMALE, "1234", 5, "dep", "spec");
 
         Student student = new Student("ana", "pop", LocalDate.now(), "adr", "em", Constants.Gender.MALE, "1234", 1);
+        Student student2 = new Student("baba", "zz", LocalDate.now(), "adr", "em", Constants.Gender.MALE, "1234", 1);
         System.out.println(teacher);
         System.out.println(student);
         // Rest of your code...
@@ -26,8 +28,23 @@ public class Main {
         System.out.println(course.getCourseId());
 
         ArrayList<Student> students = new ArrayList<>();
+        students.add(student2);
         students.add(student);
-        Classroom classroom = new Classroom(12,"A",students,teacher);
+
+        Classroom classroom = new Classroom(12, "A", students, teacher);
         System.out.println(classroom);
+
+        student2.setLastName("aaaaaaaa");
+        System.out.println(student);
+        System.out.println(classroom);
+
+        ArrayList<Classroom> classrooms = new ArrayList<>();
+        classrooms.add(classroom);
+
+        Catalogue catalogue = new Catalogue("catalogue", "descr", classrooms);
+        System.out.println(catalogue);
+
     }
+
+
 }
