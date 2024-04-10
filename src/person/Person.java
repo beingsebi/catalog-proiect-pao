@@ -1,20 +1,18 @@
 package person;
 
-
-import java.util.Date;
-
-
+import java.time.LocalDate;
 
 public class Person {
     private String firstName;
     private String lastName;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private String address;
     private String email;
     private String gender;
     private String phoneString;
 
-    public Person(String firstName, String lastName, Date dateOfBirth, String address, String email, String gender, String phoneString) {
+    @SuppressWarnings("unused")
+    public Person(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, String gender, String phoneString) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -23,8 +21,22 @@ public class Person {
         this.gender = gender;
         this.phoneString = phoneString;
     }
+    
+    @Override
+    public String toString() {
+        return "Person{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", phoneString='" + phoneString + '\'' +
+                '}';
+    }
 
-    public Person(String firstName, String lastName, Date dateOfBirth, String address, String email, String gender){
+    @SuppressWarnings("unused")
+    public Person(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, String gender){
         this(firstName, lastName, dateOfBirth, address,email,gender, null);
     }
 
@@ -49,12 +61,12 @@ public class Person {
     }
 
     @SuppressWarnings("unused")
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
     @SuppressWarnings("unused")
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
