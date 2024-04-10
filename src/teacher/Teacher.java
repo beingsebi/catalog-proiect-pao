@@ -4,6 +4,8 @@ import person.Person;
 
 import java.time.LocalDate;
 
+import shared.Constants.Gender;
+
 public class Teacher extends Person {
     private static int nextTeacherId = 0;
 
@@ -13,25 +15,25 @@ public class Teacher extends Person {
     private String specialization = null;
 
     @SuppressWarnings("unused")
-    public Teacher(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, String gender, String phoneString) {
+    public Teacher(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString) {
         super(firstName, lastName, dateOfBirth, address, email, gender, phoneString);
         this.teacherId = nextTeacherId++;
     }
 
     @SuppressWarnings("unused")
-    public Teacher(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, String gender, String phoneString, int yearsOfExperience) {
+    public Teacher(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString, int yearsOfExperience) {
         this(firstName, lastName, dateOfBirth, address, email, gender, phoneString);
         this.yearsOfExperience = yearsOfExperience;
     }
 
     @SuppressWarnings("unused")
-    public Teacher(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, String gender, String phoneString, int yearsOfExperience, String department) {
+    public Teacher(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString, int yearsOfExperience, String department) {
         this(firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearsOfExperience);
         this.department = department;
     }
 
     @SuppressWarnings("unused")
-    public Teacher(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, String gender, String phoneString, int yearsOfExperience, String department, String specialization) {
+    public Teacher(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString, int yearsOfExperience, String department, String specialization) {
         this(firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearsOfExperience, department);
         this.specialization = specialization;
     }

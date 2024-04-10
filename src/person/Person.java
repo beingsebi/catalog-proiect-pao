@@ -1,6 +1,7 @@
 package person;
 
 import java.time.LocalDate;
+import shared.Constants.Gender;
 
 public class Person {
     private String firstName;
@@ -8,11 +9,11 @@ public class Person {
     private LocalDate dateOfBirth;
     private String address;
     private String email;
-    private String gender;
+    private Gender gender;
     private String phoneString;
 
     @SuppressWarnings("unused")
-    public Person(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, String gender, String phoneString) {
+    public Person(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -36,7 +37,7 @@ public class Person {
     }
 
     @SuppressWarnings("unused")
-    public Person(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, String gender){
+    public Person(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender){
         this(firstName, lastName, dateOfBirth, address,email,gender, null);
     }
 
@@ -91,12 +92,12 @@ public class Person {
     }
 
     @SuppressWarnings("unused")
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
     @SuppressWarnings("unused")
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
