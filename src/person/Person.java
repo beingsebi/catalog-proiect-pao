@@ -22,24 +22,7 @@ public class Person {
         this.gender = gender;
         this.phoneString = phoneString;
     }
-    
-    @Override
-    public String toString() {
-        return "Person{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                ", gender='" + gender + '\'' +
-                ", phoneString='" + phoneString + '\'' +
-                '}';
-    }
 
-    @SuppressWarnings("unused")
-    public Person(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender){
-        this(firstName, lastName, dateOfBirth, address,email,gender, null);
-    }
 
     @SuppressWarnings("unused")
     public String getFirstName() {
@@ -108,5 +91,18 @@ public class Person {
     @SuppressWarnings("unused")
     public void setPhoneString(String phoneString) {
         this.phoneString = phoneString;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", gender=" + gender +
+                ", phoneString='" + phoneString + '\'' +
+                '}';
     }
 }
