@@ -9,7 +9,7 @@ public class Student extends Person {
     private static int nextStudentId = 0;
 
     private final int studentId;
-    private int yearOfStudy ;
+    private int yearOfStudy;
     private Person supervisor;
 
 
@@ -19,7 +19,7 @@ public class Student extends Person {
         this.yearOfStudy = yearOfStudy;
         this.supervisor = supervisor;
     }
-    
+
     @SuppressWarnings("unused")
     public Student(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString, int yearOfStudy) {
         this(firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearOfStudy, null);

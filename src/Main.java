@@ -1,3 +1,4 @@
+import course.Course;
 import person.Person;
 import shared.Constants;
 import student.Student;
@@ -10,7 +11,7 @@ public class Main {
         System.out.println("Hello, World!");
         Person person = new Person("ana", "pop", LocalDate.now(), "adr", "em", Constants.Gender.MALE, "1234");
         System.out.println(person);
-        
+
 
         Teacher teacher = new Teacher("ana", "pop", LocalDate.now(), "adr", "em", Constants.Gender.FEMALE, "1234", 5, "dep", "spec");
 
@@ -18,5 +19,7 @@ public class Main {
         System.out.println(teacher);
         System.out.println(student);
         // Rest of your code...
+        Course course = new Course("Java", "Java course");
+        System.out.println(course);
     }
 }

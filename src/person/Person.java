@@ -1,6 +1,7 @@
 package person;
 
 import java.time.LocalDate;
+
 import shared.Constants.Gender;
 
 public class Person {
@@ -88,6 +89,7 @@ public class Person {
     public String getPhoneString() {
         return phoneString;
     }
+
     @SuppressWarnings("unused")
     public void setPhoneString(String phoneString) {
         this.phoneString = phoneString;
