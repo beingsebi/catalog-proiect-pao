@@ -6,10 +6,7 @@ public class Course {
 
     private final int courseId;
     private String courseName;
-
-
     private String courseDescription;
-
 
     public Course(String courseName, String courseDescription) {
         this.courseId = nextCourseId++;

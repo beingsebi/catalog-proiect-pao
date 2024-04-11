@@ -15,7 +15,6 @@ public class Classroom {
     private int year;
     private String symbol;
     private SortedSet<Student> students;
-
     private Person supervisor;
 
     public Classroom(int year, String symbol, Collection<Student> students, Person supervisor) {
@@ -70,8 +69,9 @@ public class Classroom {
     }
 
     @SuppressWarnings("unused")
-    public void setStudents(SortedSet<Student> students) {
-        this.students = students;
+    public void setStudents(Collection<Student> students) {
+        this.students = new TreeSet<>();
+        this.students.addAll(students);
     }
 
     @SuppressWarnings("unused")
