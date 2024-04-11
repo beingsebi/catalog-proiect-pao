@@ -5,6 +5,7 @@ import teacher.Teacher;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class CourseInstance {
     private static int nextCourseInstanceId = 0;
@@ -16,10 +17,11 @@ public class CourseInstance {
     private LocalTime startTime;
     private int duration;
 
-    public CourseInstance(Course course, ArrayList<Teacher> teachers, Classroom classroom, LocalTime startTime, int duration) {
+    public CourseInstance(Course course, Collection<Teacher> teachers, Classroom classroom, LocalTime startTime, int duration) {
         this.courseInstanceId = nextCourseInstanceId++;
         this.course = course;
-        this.teachers = teachers;
+        this.teachers = new ArrayList<>();
+        this.teachers.addAll(teachers);
         this.classroom = classroom;
         this.startTime = startTime;
         this.duration = duration;

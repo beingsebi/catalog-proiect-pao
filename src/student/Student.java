@@ -46,6 +46,6 @@ public class Student extends Person implements Comparable<Student> {
         return "Student{" +
                 "studentId=" + studentId +
                 ", yearOfStudy=" + yearOfStudy +
-                "} " + super.toString();
+                "} " + super.toString() + "\n" ;
     }
 }

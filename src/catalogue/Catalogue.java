@@ -159,6 +159,12 @@ public class Catalogue {
         classrooms.remove(classroom);
     }
 
+    @SuppressWarnings("unused")
+    int insertCourse(Course course) {
+        courses.add(course);
+        return course.getCourseId();
+    }
+
     @Override
     public String toString() {
         return "Catalogue{" +
@@ -166,9 +172,9 @@ public class Catalogue {
                 ", catalogueName='" + catalogueName + '\'' +
                 ", catalogueDescription='" + catalogueDescription + '\'' +
                 ", classrooms=" + classrooms +
-                ", students=" + students +
-                ", teachers=" + teachers +
-                ", courses=" + courses +
+                ", students=\n" + students +
+                ", teachers=\n" + teachers +
+                ", courses=\n" + courses +
                 '}';
     }
 
@@ -225,5 +231,25 @@ public class Catalogue {
             }
         }
         this.timetable = Map.copyOf(timetable);
+    }
+
+    @SuppressWarnings("unused")
+    void addCourseInstance(Classroom classroom, CourseInstance courseInstance) {
+        if (timetable.containsKey(classroom)) {
+            timetable.get(classroom).add(courseInstance);
+        } else {
+            ArrayList<CourseInstance> courseInstances = new ArrayList<>();
+            courseInstances.add(courseInstance);
+            timetable.put(classroom, courseInstances);
+        }
+    }
+
+    public Course getCourseById(int courseId) {
+        for (Course course : courses) {
+            if (course.getCourseId() == courseId) {
+                return course;
+            }
+        }
+        return null;
     }
 }
