@@ -1,6 +1,5 @@
 package course;
 
-import classroom.Classroom;
 import teacher.Teacher;
 
 import java.time.LocalTime;
