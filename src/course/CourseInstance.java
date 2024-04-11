@@ -1,6 +1,6 @@
 package course;
 
-import student.Student;
+import classroom.Classroom;
 import teacher.Teacher;
 
 import java.time.LocalTime;
@@ -12,15 +12,15 @@ public class CourseInstance {
     private final int courseInstanceId;
     private Course course;
     private ArrayList<Teacher> teachers;
-    private ArrayList<Student> students;
+    private Classroom classroom;
     private LocalTime startTime;
     private int duration;
 
-    public CourseInstance(Course course, ArrayList<Teacher> teachers, ArrayList<Student> students, LocalTime startTime, int duration) {
+    public CourseInstance(Course course, ArrayList<Teacher> teachers, Classroom classroom, LocalTime startTime, int duration) {
         this.courseInstanceId = nextCourseInstanceId++;
         this.course = course;
         this.teachers = teachers;
-        this.students = students;
+        this.classroom = classroom;
         this.startTime = startTime;
         this.duration = duration;
     }
@@ -50,13 +50,13 @@ public class CourseInstance {
     }
 
     @SuppressWarnings("unused")
-    public ArrayList<Student> getStudents() {
-        return students;
+    public Classroom getClassroom() {
+        return classroom;
     }
 
     @SuppressWarnings("unused")
-    public void setStudents(ArrayList<Student> students) {
-        this.students = students;
+    public void setClassroom(Classroom classroom) {
+        this.classroom = classroom;
     }
 
     @SuppressWarnings("unused")

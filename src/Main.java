@@ -41,9 +41,9 @@ public class Main {
         ArrayList<Classroom> classrooms = new ArrayList<>();
         classrooms.add(classroom);
 
-        Catalogue catalogue = new Catalogue("catalogue", "descr");
-        catalogue.setClassrooms(classrooms);
-        System.out.println(catalogue);
+//        Catalogue catalogue = new Catalogue("catalogue", "descr");
+//        catalogue.setClassrooms(classrooms);
+//        System.out.println(catalogue);
 
     }
 
