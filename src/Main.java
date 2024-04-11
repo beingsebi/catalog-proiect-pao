@@ -1,5 +1,6 @@
 import catalogue.CatalogueService;
 import shared.Constants;
+import student.Student;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,10 +18,15 @@ public class Main {
 
         CatalogueService.createClassroom(2024, "A", Collections.singletonList(0), 0);
 
+        Student s = new Student("Jane", "Doe", LocalDate.now(), "123 Street", "jane.doe@example", Constants.Gender.MALE, "0987654321", 1);
+
+        CatalogueService.insertStudent(s);
         CatalogueService.addStudentToClassroom(0, 0);
 
-        CatalogueService.addCourseInstanceToTimetable(0, 0, Collections.singletonList(1), LocalTime.of(9, 0), 2);
+        CatalogueService.addCourseInstanceToTimetable(0, 0, Collections.singletonList(0), LocalTime.of(9, 0), 2);
 
         System.out.println(CatalogueService.getCatalogue());
+
+        System.out.println(CatalogueService.getTimeTable());
     }
 }

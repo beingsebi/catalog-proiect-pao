@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class CatalogueService {
@@ -39,14 +40,32 @@ public final class CatalogueService {
     }
 
     @SuppressWarnings("unused")
+    public static void insertTeacher(Teacher t) {
+        int id = catalogue.insertTeacher(t);
+        System.out.println("Teacher with id " + id + " inserted.");
+    }
+
+    @SuppressWarnings("unused")
     public static void insertStudent(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Constants.Gender gender, String phoneString, int yearOfStudy) {
         int id = catalogue.insertStudent(new Student(firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearOfStudy));
         System.out.println("Student with id " + id + " inserted.");
     }
 
     @SuppressWarnings("unused")
+    public static void insertStudent(Student s) {
+        int id = catalogue.insertStudent(s);
+        System.out.println("Student with id " + id + " inserted.");
+    }
+
+    @SuppressWarnings("unused")
     public static void insertCourse(String courseName, String courseDescription) {
         int id = catalogue.insertCourse(new Course(courseName, courseDescription));
+        System.out.println("Course with id " + id + " inserted.");
+    }
+
+    @SuppressWarnings("unused")
+    public static void insertCourse(Course c) {
+        int id = catalogue.insertCourse(c);
         System.out.println("Course with id " + id + " inserted.");
     }
 
@@ -65,6 +84,12 @@ public final class CatalogueService {
     }
 
     @SuppressWarnings("unused")
+    public static void createClassroom(Classroom c) {
+        int id = catalogue.insertClassroom(c);
+        System.out.println("Classroom with id " + id + " inserted.");
+    }
+
+    @SuppressWarnings("unused")
     public static void addStudentToClassroom(int classroomId, int studentId) {
         catalogue.getClassroomById(classroomId).addStudent(catalogue.getStudentById(studentId));
     }
@@ -76,7 +101,7 @@ public final class CatalogueService {
 
     @SuppressWarnings("unused")
     public static void addCourseInstanceToTimetable(Classroom classroom, Course course, Collection<Teacher> teachers, LocalTime startTime, int duration) {
-        CourseInstance courseInstance = new CourseInstance(course, teachers, classroom, startTime, duration);
+        CourseInstance courseInstance = new CourseInstance(course, teachers, startTime, duration);
         catalogue.getTimetable().computeIfAbsent(classroom, k -> new ArrayList<>()).add(courseInstance);
     }
 
@@ -88,5 +113,45 @@ public final class CatalogueService {
                 .map(catalogue::getTeacherById)
                 .toList();
         addCourseInstanceToTimetable(classroom, course, teachers, startTime, duration);
+    }
+
+    @SuppressWarnings("unused")
+    public static void setCatalogueName(String catalogueName) {
+        catalogue.setCatalogueName(catalogueName);
+    }
+
+    @SuppressWarnings("unused")
+    public static void setCatalogueDescription(String catalogueDescription) {
+        catalogue.setCatalogueDescription(catalogueDescription);
+    }
+
+    @SuppressWarnings("unused")
+    public static Student getStudentById(int studentId) {
+        return catalogue.getStudentById(studentId);
+    }
+
+    @SuppressWarnings("unused")
+    public Teacher getTeacherById(int teacherId) {
+        return catalogue.getTeacherById(teacherId);
+    }
+
+    @SuppressWarnings("unused")
+    public Classroom getClassroomById(int classroomId) {
+        return catalogue.getClassroomById(classroomId);
+    }
+
+    @SuppressWarnings("unused")
+    public Course getCourseById(int courseId) {
+        return catalogue.getCourseById(courseId);
+    }
+
+    @SuppressWarnings("unused")
+    public void resetTimetable() {
+        catalogue.resetTimetable();
+    }
+
+    @SuppressWarnings("unused")
+    public static Map<Classroom, ArrayList<CourseInstance>> getTimeTable() {
+        return catalogue.getTimetable();
     }
 }

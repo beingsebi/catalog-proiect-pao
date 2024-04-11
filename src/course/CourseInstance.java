@@ -13,19 +13,30 @@ public class CourseInstance {
     private final int courseInstanceId;
     private Course course;
     private ArrayList<Teacher> teachers;
-    private Classroom classroom;
     private LocalTime startTime;
     private int duration;
 
-    public CourseInstance(Course course, Collection<Teacher> teachers, Classroom classroom, LocalTime startTime, int duration) {
+    public CourseInstance(Course course, Collection<Teacher> teachers, LocalTime startTime, int duration) {
         this.courseInstanceId = nextCourseInstanceId++;
         this.course = course;
         this.teachers = new ArrayList<>();
         this.teachers.addAll(teachers);
-        this.classroom = classroom;
         this.startTime = startTime;
         this.duration = duration;
     }
+
+
+    @Override
+    public String toString() {
+        return "CourseInstance{" +
+                "courseInstanceId=" + courseInstanceId +
+                ", course=" + course +
+                ", teachers=" + teachers +
+                ", startTime=" + startTime +
+                ", duration=" + duration +
+                '}';
+    }
+
     @SuppressWarnings("unused")
     public int getCourseInstanceId() {
         return courseInstanceId;
@@ -49,16 +60,6 @@ public class CourseInstance {
     @SuppressWarnings("unused")
     public void setTeachers(ArrayList<Teacher> teachers) {
         this.teachers = teachers;
-    }
-
-    @SuppressWarnings("unused")
-    public Classroom getClassroom() {
-        return classroom;
-    }
-
-    @SuppressWarnings("unused")
-    public void setClassroom(Classroom classroom) {
-        this.classroom = classroom;
     }
 
     @SuppressWarnings("unused")

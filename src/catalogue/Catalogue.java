@@ -7,7 +7,12 @@ import course.CourseInstance;
 import student.Student;
 import teacher.Teacher;
 
-import java.util.*;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class Catalogue {
     private static int nextCatalogueId = 0;
