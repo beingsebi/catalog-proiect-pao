@@ -1,11 +1,12 @@
 package catalogue;
 
-import classroom.Classroom;
+import models.Classroom;
 
-import course.Course;
-import course.CourseInstance;
-import student.Student;
-import teacher.Teacher;
+import models.Course;
+import models.CourseInstance;
+import models.Student;
+import models.Teacher;
+import repositories.*;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -20,11 +21,10 @@ public class Catalogue {
     private final int catalogueId;
     private String catalogueName;
     private String catalogueDescription;
-    private Set<Teacher> teachers;
-    private Set<Student> students;
-    private Set<Course> courses;
-    private Set<Classroom> classrooms;
-    private Map<Classroom, ArrayList<CourseInstance>> timetable;
+
+    private StudentRepository studentRepository;
+    private Classroom classroom;
+    private CourseInstanceRepository courseInstanceRepository;
 
     Catalogue(String catalogueName, String catalogueDescription) {
         this.catalogueId = nextCatalogueId++;

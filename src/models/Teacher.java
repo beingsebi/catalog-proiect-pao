@@ -1,6 +1,4 @@
-package teacher;
-
-import person.Person;
+package models;
 
 import java.time.LocalDate;
 

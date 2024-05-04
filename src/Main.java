@@ -1,6 +1,6 @@
 import catalogue.CatalogueService;
 import shared.Constants;
-import student.Student;
+import models.Student;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

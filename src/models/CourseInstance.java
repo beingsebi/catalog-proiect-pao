@@ -1,6 +1,4 @@
-package course;
-
-import teacher.Teacher;
+package models;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

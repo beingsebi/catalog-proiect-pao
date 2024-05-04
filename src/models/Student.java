@@ -1,6 +1,5 @@
-package student;
+package models;
 
-import person.Person;
 import shared.Constants.Gender;
 
 import java.time.LocalDate;

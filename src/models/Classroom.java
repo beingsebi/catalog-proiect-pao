@@ -1,7 +1,4 @@
-package classroom;
-
-import person.Person;
-import student.Student;
+package models;
 
 import java.util.Collection;
 import java.util.SortedSet;
