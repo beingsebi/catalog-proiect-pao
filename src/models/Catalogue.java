@@ -18,6 +18,7 @@ public class Catalogue {
         this.catalogueName = catalogueName;
         this.catalogueDescription = catalogueDescription;
 
+
     }
 
     public int getCatalogueId() {

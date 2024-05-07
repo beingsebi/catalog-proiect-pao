@@ -40,4 +40,19 @@ public class TeacherRepository implements TeacherRepositoryI{
         }
         return teacher.getTeacherId();
     }
+
+    @Override
+    public boolean teacherExists(int teacherId) {
+        for (Teacher teacher : teachers) {
+            if (teacher.getTeacherId() == teacherId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean teacherExists(Teacher teacher) {
+        return this.teacherExists(teacher.getTeacherId());
+    }
 }

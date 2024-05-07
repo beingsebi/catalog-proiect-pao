@@ -33,6 +33,20 @@ public class StudentRepository implements StudentRepositoryI{
     }
 
     @Override
+    public boolean studentExists(int studentId) {
+        for (Student student : students) {
+            if (student.getStudentId() == studentId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean studentExists(Student student) {
+        return this.studentExists(student.getStudentId());
+    }
+
+    @Override
     public int removeStudent(Student student) {
         boolean ok = students.remove(student);
         if (!ok) {
