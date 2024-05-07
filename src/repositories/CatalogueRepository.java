@@ -1,6 +1,8 @@
 package repositories;
 
 import models.Catalogue;
+import models.Student;
+import models.Teacher;
 
 import java.util.Set;
 
@@ -30,5 +32,32 @@ public class CatalogueRepository implements CatalogueRepositoryI{
             return -1;
         }
         return catalogue.getCatalogueId();
+    }
+
+    @Override
+    public int removeStudent(Student student){
+        for (Catalogue catalogue : catalogues) {
+            if (catalogue.removeStudent(student) != -1) {
+                return student.getStudentId();
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public boolean checkIfTeacherExists(Teacher teacher) {
+        for (Catalogue catalogue : catalogues) {
+            if (catalogue.getAllTeachers().contains(teacher)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void removeTeacher(Teacher teacher) {
+        for (Catalogue catalogue : catalogues) {
+            catalogue.removeTeacher(teacher);
+        }
     }
 }

@@ -1,3 +1,6 @@
+import models.CourseInstance;
+import repositories.CourseInstanceRepository;
+import services.ManagerService;
 import shared.Constants;
 import models.Student;
 
@@ -7,6 +10,8 @@ import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
+        ManagerService managerService = new ManagerService();
+
 //        CatalogueService.createCatalogue("My Catalogue", "This is a catalogue for my school.");
 //
 //        CatalogueService.insertTeacher("John", "Doe", LocalDate.now(), "123 Street", "john.doe@example.com", Constants.Gender.MALE, "1234567890", 10, "Computer Science", "Java");

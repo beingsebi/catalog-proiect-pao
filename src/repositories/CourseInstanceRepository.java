@@ -1,23 +1,29 @@
 package repositories;
 
-import models.Classroom;
 import models.CourseInstance;
+import models.Teacher;
 import shared.Constants;
-
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
+import shared.CourseInstanceComparator;
+import java.util.*;
 
 public class CourseInstanceRepository implements CourseInstanceRepositoryI{
-    private Set<CourseInstance> courseInstances;
-    private Map<Constants.Days, ArrayList<CourseInstance>> timetable;
+    private final Set<CourseInstance> courseInstances;
+    private final Map<Constants.Days, TreeSet<CourseInstance>> timetable;
+
+    public CourseInstanceRepository() {
+        this.courseInstances = new HashSet<>();
+        this.timetable = new HashMap<>();
+        for (Constants.Days day : Constants.Days.values()) {
+            timetable.put(day, new TreeSet<>(new CourseInstanceComparator()));
+        }
+    }
 
     @Override
-    public int insertCourseInstance(CourseInstance courseInstance, Classroom classroom) {
+    public int insertCourseInstance(CourseInstance courseInstance, Constants.Days day) {
         if (courseInstances.add(courseInstance)) {
             return -1;
         }
-        timetable.get(classroom.getClassroomId()).add(courseInstance);
+        timetable.get(day).add(courseInstance);
         return courseInstance.getCourseInstanceId();
     }
 
@@ -32,11 +38,11 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI{
     }
 
     @Override
-    public int removeCourseInstance(CourseInstance courseInstance, Classroom classroom) {
+    public int removeCourseInstance(CourseInstance courseInstance, Constants.Days day) {
         if (!courseInstances.remove(courseInstance)) {
             return -1;
         }
-        timetable.get(classroom.getClassroomId()).remove(courseInstance);
+        timetable.get(day).remove(courseInstance);
         return courseInstance.getCourseInstanceId();
     }
 
@@ -45,9 +51,34 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI{
         if (!courseInstances.remove(courseInstance)) {
             return -1;
         }
-        for (ArrayList<CourseInstance> courseInstances : timetable.values()) {
+        for (TreeSet<CourseInstance> courseInstances : timetable.values()) {
             courseInstances.remove(courseInstance);
         }
         return courseInstance.getCourseInstanceId();
+    }
+
+    @Override
+    public ArrayList<Teacher> getAllTeachers() {
+        ArrayList<Teacher> teachers = new ArrayList<>();
+        for (CourseInstance courseInstance : courseInstances) {
+            teachers.addAll(courseInstance.getTeachers());
+        }
+        return teachers;
+    }
+
+    @Override
+    public void removeCoursesOfTeacher(Teacher teacher) {
+        this.courseInstances.removeIf(courseInstance -> courseInstance.getTeachers().contains(teacher));
+        for (TreeSet<CourseInstance> courseInstances : timetable.values()) {
+            courseInstances.removeIf(courseInstance -> courseInstance.getTeachers().contains(teacher));
+        }
+    }
+
+    @Override
+    public void reset() {
+        courseInstances.clear();
+        for (TreeSet<CourseInstance> courseInstances : timetable.values()) {
+            courseInstances.clear();
+        }
     }
 }

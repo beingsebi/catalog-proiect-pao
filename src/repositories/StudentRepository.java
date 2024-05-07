@@ -6,11 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class StudentRepository implements StudentRepositoryI{
-    private Set<Student> students;
-
-    public StudentRepository(Set<Student> students) {
-        this.students = students;
-    }
+    private final Set<Student> students;
 
     public StudentRepository() {
         this.students = new HashSet<>();
@@ -48,8 +44,7 @@ public class StudentRepository implements StudentRepositoryI{
 
     @Override
     public int removeStudent(Student student) {
-        boolean ok = students.remove(student);
-        if (!ok) {
+        if (!students.remove(student)) {
             return -1;
         }
         return student.getStudentId();
