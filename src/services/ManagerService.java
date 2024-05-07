@@ -62,8 +62,8 @@ public class ManagerService {
         return catalogueRepository.insertCatalogue(catalogue);
     }
 
-    public int insertCatalogue(String catalogueName, String catalogueDescription) {
-        return catalogueRepository.insertCatalogue(new Catalogue(catalogueName, catalogueDescription));
+    public int insertCatalogue(String catalogueName, String catalogueDescription, int classYear, String classSymbol) {
+        return catalogueRepository.insertCatalogue(new Catalogue(catalogueName, catalogueDescription, classYear, classSymbol));
     }
 
     public Catalogue getCatalogueById(int catalogueId) {
@@ -108,5 +108,13 @@ public class ManagerService {
             return -2; // catalogue not found
         }
         return catalogue.insertStudent(student); // returns studentId or -1 if student already exists
+    }
+
+    public int assignStudentToCatalogue(int studentId, int catalogueId) {
+        Student student = studentRepository.getStudentById(studentId);
+        if (student == null) {
+            return -3; // student not found
+        }
+        return this.assignStudentToCatalogue(student, catalogueId);
     }
 }

@@ -21,13 +21,13 @@ public class Catalogue {
     private final CourseInstanceRepository courseInstanceRepository;
 
 
-    public Catalogue(String catalogueName, String catalogueDescription) {
+    public Catalogue(String catalogueName, String catalogueDescription, int classYear, String classSymbol) {
         this.catalogueId = nextCatalogueId++;
         this.catalogueName = catalogueName;
         this.catalogueDescription = catalogueDescription;
 
-        this.classYear = -1;
-        this.classSymbol = null;
+        this.classYear = classYear;
+        this.classSymbol = classSymbol;
         this.studentRepository = new StudentRepository();
         this.classSupervisor = null;
         this.courseInstanceRepository = new CourseInstanceRepository();
