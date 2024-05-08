@@ -17,12 +17,9 @@ import static java.lang.System.exit;
 
 public class Main {
     public static void main(String[] args) throws Exception{
-        String url = "jdbc:postgresql://localhost:5432/dbpao";
-        String user = "sebi";
-        String password = "1234";
 
         Connection connection = DbUtils.getConnection();
-        String sql = "select * from testtab";
+        String sql = "select * from courses";
         assert connection != null;
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(sql);

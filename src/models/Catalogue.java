@@ -17,7 +17,7 @@ public class Catalogue {
     private String classSymbol;
 
     private final StudentRepository studentRepository;
-    private Person classSupervisor;
+    private Teacher classSupervisor;
     private final CourseInstanceRepository courseInstanceRepository;
 
 
@@ -85,12 +85,12 @@ public class Catalogue {
         return classSupervisor;
     }
 
-    public void setClassSupervisor(Person classSupervisor) {
+    public void setClassSupervisor(Teacher classSupervisor) {
         this.classSupervisor = classSupervisor;
     }
 
-    public int insertCourseInstance(CourseInstance courseInstance, Constants.Days day) {
-        return courseInstanceRepository.insertCourseInstance(courseInstance, day);
+    public int insertCourseInstance(CourseInstance courseInstance) {
+        return courseInstanceRepository.insertCourseInstance(courseInstance);
     }
 
     public ArrayList<Teacher> getAllTeachers() {

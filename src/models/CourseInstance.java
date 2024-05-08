@@ -1,5 +1,7 @@
 package models;
 
+import shared.Constants.Days;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,15 +13,17 @@ public class CourseInstance {
     private Course course;
     private ArrayList<Teacher> teachers;
     private LocalTime startTime;
+    private Days day;
     private int duration;
 
-    public CourseInstance(Course course, Collection<Teacher> teachers, LocalTime startTime, int duration) {
+    public CourseInstance(Course course, Collection<Teacher> teachers, LocalTime startTime, Days day , int duration) {
         this.courseInstanceId = nextCourseInstanceId++;
         this.course = course;
         this.teachers = new ArrayList<>();
         if(teachers != null)
             this.teachers.addAll(teachers);
         this.startTime = startTime;
+        this.day = day;
         this.duration = duration;
     }
 
@@ -31,6 +35,7 @@ public class CourseInstance {
                 ", course=" + course +
                 ", teachers=" + teachers +
                 ", startTime=" + startTime +
+                ", day=" + day +
                 ", duration=" + duration +
                 '}';
     }
@@ -78,5 +83,19 @@ public class CourseInstance {
     @SuppressWarnings("unused")
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public Days getDay() {
+        return day;
+    }
+
+    public void setDay(Days day) {
+        this.day = day;
+    }
+
+    public void addTeacher(Teacher teacher) {
+        if (teachers.contains(teacher))
+            return;
+        this.teachers.add(teacher);
     }
 }

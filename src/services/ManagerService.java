@@ -141,7 +141,7 @@ public class ManagerService {
         if (catalogue == null) {
             return -2; // catalogue not found
         }
-        return catalogue.insertCourseInstance(new CourseInstance(course, teachers, startTime, duration), day);
+        return catalogue.insertCourseInstance(new CourseInstance(course, teachers, startTime, day, duration));
     }
 
     public int insertCourseInstance(Catalogue catalogue, Constants.Days day, Course course, Collection<Teacher> teachers, LocalTime startTime, int duration) {
@@ -151,6 +151,6 @@ public class ManagerService {
         if(!this.courseRepository.courseExists(course)) {
             return -1; // course not found
         }
-        return catalogue.insertCourseInstance(new CourseInstance(course, teachers, startTime, duration), day);
+        return catalogue.insertCourseInstance(new CourseInstance(course, teachers, startTime, day, duration));
     }
 }
