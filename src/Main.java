@@ -4,12 +4,33 @@ import models.Student;
 import models.Teacher;
 import services.ManagerService;
 import shared.Constants;
+import shared.DbUtils;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import static java.lang.System.exit;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
+        String url = "jdbc:postgresql://localhost:5432/dbpao";
+        String user = "sebi";
+        String password = "1234";
+
+        Connection connection = DbUtils.getConnection();
+        String sql = "select * from testtab";
+        assert connection != null;
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next()){
+            System.out.println(rs.getString(1));
+        }
+
+        exit(0);
         ManagerService managerService = new ManagerService();
         int it1 = managerService.insertTeacher("John", "Doe", LocalDate.now(), "123 Street", "john.doe@example", Constants.Gender.FEMALE, "123", 3, "Computer Science", "Java");
         Teacher t1 = managerService.getTeacherById(it1);
