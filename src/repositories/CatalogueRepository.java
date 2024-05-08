@@ -4,10 +4,10 @@ import models.Catalogue;
 import models.Student;
 import models.Teacher;
 
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
-public class CatalogueRepository implements CatalogueRepositoryI{
+public class CatalogueRepository implements CatalogueRepositoryI {
     public Set<Catalogue> catalogues;
 
     public CatalogueRepository() {
@@ -40,7 +40,7 @@ public class CatalogueRepository implements CatalogueRepositoryI{
     }
 
     @Override
-    public int removeStudent(Student student){
+    public int removeStudent(Student student) {
         for (Catalogue catalogue : catalogues) {
             if (catalogue.removeStudent(student) != -1) {
                 return student.getStudentId();

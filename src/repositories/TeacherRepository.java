@@ -5,8 +5,8 @@ import models.Teacher;
 import java.util.HashSet;
 import java.util.Set;
 
-public class TeacherRepository implements TeacherRepositoryI{
-    private Set<Teacher> teachers;
+public class TeacherRepository implements TeacherRepositoryI {
+    private final Set<Teacher> teachers;
 
     public TeacherRepository(Set<Teacher> teachers) {
         this.teachers = teachers;

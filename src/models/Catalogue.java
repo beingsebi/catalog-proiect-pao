@@ -1,7 +1,7 @@
 package models;
 
-import repositories.*;
-import shared.Constants;
+import repositories.CourseInstanceRepository;
+import repositories.StudentRepository;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,15 +10,13 @@ public class Catalogue {
     private static int nextCatalogueId = 0;
 
     private final int catalogueId;
+    private final StudentRepository studentRepository;
+    private final CourseInstanceRepository courseInstanceRepository;
     private String catalogueName;
     private String catalogueDescription;
-
     private int classYear;
     private String classSymbol;
-
-    private final StudentRepository studentRepository;
     private Teacher classSupervisor;
-    private final CourseInstanceRepository courseInstanceRepository;
 
 
     public Catalogue(String catalogueName, String catalogueDescription, int classYear, String classSymbol) {
@@ -96,7 +94,7 @@ public class Catalogue {
     public ArrayList<Teacher> getAllTeachers() {
         ArrayList<Teacher> aux = courseInstanceRepository.getAllTeachers();
         if (classSupervisor != null && classSupervisor instanceof Teacher) {
-            aux.add((Teacher) classSupervisor);
+            aux.add(classSupervisor);
         }
         HashSet<Teacher> curated = new HashSet<>(aux);
         return new ArrayList<>(curated);

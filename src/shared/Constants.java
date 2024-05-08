@@ -17,7 +17,7 @@ public class Constants {
         }
     }
 
-    public enum Days{
+    public enum Days {
         MONDAY {
             public String toString() {
                 return "Monday";

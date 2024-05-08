@@ -1,8 +1,8 @@
 package models;
 
-import java.time.LocalDate;
-
 import shared.Constants.Gender;
+
+import java.time.LocalDate;
 
 public class Teacher extends Person {
     private static int nextTeacherId = 0;

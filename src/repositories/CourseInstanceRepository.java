@@ -3,9 +3,11 @@ package repositories;
 import models.CourseInstance;
 import models.Teacher;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-public class CourseInstanceRepository implements CourseInstanceRepositoryI{
+public class CourseInstanceRepository implements CourseInstanceRepositoryI {
     private final Set<CourseInstance> courseInstances;
 
     public CourseInstanceRepository() {

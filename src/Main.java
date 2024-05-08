@@ -7,7 +7,6 @@ import shared.Constants;
 import shared.DbUtils;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -16,14 +15,14 @@ import java.time.LocalTime;
 import static java.lang.System.exit;
 
 public class Main {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
 
         Connection connection = DbUtils.getConnection();
         String sql = "select * from courses";
         assert connection != null;
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(sql);
-        while(rs.next()){
+        while (rs.next()) {
             System.out.println(rs.getString(1));
         }
 
@@ -47,7 +46,7 @@ public class Main {
         managerService.insertCourseInstance(ica1, Constants.Days.FRIDAY, ic1, null, LocalTime.now(), 2);
 
         Catalogue cc = managerService.getCatalogueById(ica1);
-        int is2=managerService.insertStudent("Jane", "Doe", LocalDate.now(), "123 Street", "jane.doe@example", Constants.Gender.MALE, "0987654321", 1);
+        int is2 = managerService.insertStudent("Jane", "Doe", LocalDate.now(), "123 Street", "jane.doe@example", Constants.Gender.MALE, "0987654321", 1);
         managerService.assignStudentToCatalogue(is2, ica1);
         System.out.println(cc);
     }

@@ -5,7 +5,7 @@ import models.Student;
 import java.util.HashSet;
 import java.util.Set;
 
-public class StudentRepository implements StudentRepositoryI{
+public class StudentRepository implements StudentRepositoryI {
     private final Set<Student> students;
 
     public StudentRepository() {

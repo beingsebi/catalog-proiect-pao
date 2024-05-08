@@ -16,11 +16,11 @@ public class CourseInstance {
     private Days day;
     private int duration;
 
-    public CourseInstance(Course course, Collection<Teacher> teachers, LocalTime startTime, Days day , int duration) {
+    public CourseInstance(Course course, Collection<Teacher> teachers, LocalTime startTime, Days day, int duration) {
         this.courseInstanceId = nextCourseInstanceId++;
         this.course = course;
         this.teachers = new ArrayList<>();
-        if(teachers != null)
+        if (teachers != null)
             this.teachers.addAll(teachers);
         this.startTime = startTime;
         this.day = day;

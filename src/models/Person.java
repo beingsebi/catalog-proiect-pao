@@ -1,8 +1,8 @@
 package models;
 
-import java.time.LocalDate;
-
 import shared.Constants.Gender;
+
+import java.time.LocalDate;
 
 public class Person {
     private String firstName;

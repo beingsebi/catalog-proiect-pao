@@ -9,8 +9,8 @@ public interface StudentRepositoryI {
 
     int removeStudent(Student student);
 
-    public boolean studentExists(int studentId);
+    boolean studentExists(int studentId);
 
-    public boolean studentExists(Student student);
+    boolean studentExists(Student student);
 
 }

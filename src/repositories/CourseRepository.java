@@ -2,11 +2,11 @@ package repositories;
 
 import models.Course;
 
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
-public class CourseRepository implements CourseRepositoryI{
-    private Set<Course> courses;
+public class CourseRepository implements CourseRepositoryI {
+    private final Set<Course> courses;
 
     public CourseRepository(Set<Course> courses) {
         this.courses = courses;

@@ -148,7 +148,7 @@ public class ManagerService {
         if (!this.catalogueRepository.catalogueExists(catalogue)) {
             return -2; // catalogue not found
         }
-        if(!this.courseRepository.courseExists(course)) {
+        if (!this.courseRepository.courseExists(course)) {
             return -1; // course not found
         }
         return catalogue.insertCourseInstance(new CourseInstance(course, teachers, startTime, day, duration));
