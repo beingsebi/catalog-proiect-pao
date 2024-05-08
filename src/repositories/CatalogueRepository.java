@@ -5,9 +5,14 @@ import models.Student;
 import models.Teacher;
 
 import java.util.Set;
+import java.util.HashSet;
 
 public class CatalogueRepository implements CatalogueRepositoryI{
     public Set<Catalogue> catalogues;
+
+    public CatalogueRepository() {
+        this.catalogues = new HashSet<>();
+    }
 
     @Override
     public int insertCatalogue(Catalogue catalogue) {
@@ -45,13 +50,18 @@ public class CatalogueRepository implements CatalogueRepositoryI{
     }
 
     @Override
-    public boolean checkIfTeacherExists(Teacher teacher) {
+    public boolean teacherExists(Teacher teacher) {
         for (Catalogue catalogue : catalogues) {
             if (catalogue.getAllTeachers().contains(teacher)) {
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean catalogueExists(Catalogue catalogue) {
+        return catalogues.contains(catalogue);
     }
 
     @Override

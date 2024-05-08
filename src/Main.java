@@ -1,3 +1,4 @@
+import models.Catalogue;
 import models.Course;
 import models.Student;
 import models.Teacher;
@@ -5,11 +6,12 @@ import services.ManagerService;
 import shared.Constants;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Main {
     public static void main(String[] args) {
         ManagerService managerService = new ManagerService();
-        int it1 = managerService.insertTeacher("John", "Doe", LocalDate.now(), "123 Street","john.doe@example", Constants.Gender.FEMALE,"123",3,"Computer Science","Java");
+        int it1 = managerService.insertTeacher("John", "Doe", LocalDate.now(), "123 Street", "john.doe@example", Constants.Gender.FEMALE, "123", 3, "Computer Science", "Java");
         Teacher t1 = managerService.getTeacherById(it1);
 
         int is1 = managerService.insertStudent("Jane", "Doe", LocalDate.now(), "123 Street", "jane.doe@example", Constants.Gender.MALE, "0987654321", 1);
@@ -18,9 +20,17 @@ public class Main {
         int ic1 = managerService.insertCourse("Java Programming", "A course about Java programming");
         Course c1 = managerService.getCourseById(ic1);
 
-        int ica1 = managerService.insertCatalogue("My Catalogue", "This is a catalogue for my school",2, "A");
+        int ica1 = managerService.insertCatalogue("My Catalogue", "This is a catalogue for my school", 2, "A");
 
+        managerService.assignTeacherAsSupervisorToCatalogue(t1, ica1);
 
+        managerService.assignStudentToCatalogue(s1, ica1);
 
+        managerService.insertCourseInstance(ica1, Constants.Days.FRIDAY, ic1, null, LocalTime.now(), 2);
+
+        Catalogue cc = managerService.getCatalogueById(ica1);
+        int is2=managerService.insertStudent("Jane", "Doe", LocalDate.now(), "123 Street", "jane.doe@example", Constants.Gender.MALE, "0987654321", 1);
+        managerService.assignStudentToCatalogue(is2, ica1);
+        System.out.println(cc);
     }
 }

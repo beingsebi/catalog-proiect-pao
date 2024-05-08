@@ -1,13 +1,15 @@
 package services;
 
-import models.Catalogue;
-import models.Course;
-import models.Student;
-import models.Teacher;
-import repositories.*;
+import models.*;
+import repositories.CatalogueRepository;
+import repositories.CourseRepository;
+import repositories.StudentRepository;
+import repositories.TeacherRepository;
 import shared.Constants;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Collection;
 
 public class ManagerService {
     private final StudentRepository studentRepository;
@@ -27,7 +29,7 @@ public class ManagerService {
     }
 
     public int insertStudent(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Constants.Gender gender, String phoneString, int yearOfStudy) {
-        return studentRepository.insertStudent(new Student(firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearOfStudy) );
+        return studentRepository.insertStudent(new Student(firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearOfStudy));
     }
 
     public Student getStudentById(int studentId) {
@@ -82,7 +84,7 @@ public class ManagerService {
     }
 
     public boolean teacherIsActive(Teacher teacher) {
-        return catalogueRepository.checkIfTeacherExists(teacher);
+        return catalogueRepository.teacherExists(teacher);
     }
 
     public boolean studentExists(Student student) {
@@ -97,9 +99,21 @@ public class ManagerService {
         catalogueRepository.removeTeacher(teacher);
     }
 
-    public void assignTeacherAsSupervisorToCatalogue(Teacher teacher, int catalogueId) {
+    public int assignTeacherAsSupervisorToCatalogue(Teacher teacher, int catalogueId) {
         Catalogue catalogue = catalogueRepository.getCatalogueById(catalogueId);
+        if (catalogue == null) {
+            return -1; // catalogue not found
+        }
         catalogue.setClassSupervisor(teacher);
+        return teacher.getTeacherId();
+    }
+
+    public int assignTeacherAsSupervisorToCatalogue(int teacherId, int catalogueId) {
+        Teacher teacher = teacherRepository.getTeacherById(teacherId);
+        if (teacher == null) {
+            return -2; // teacher not found
+        }
+        return this.assignTeacherAsSupervisorToCatalogue(teacher, catalogueId);
     }
 
     public int assignStudentToCatalogue(Student student, int catalogueId) {
@@ -116,5 +130,27 @@ public class ManagerService {
             return -3; // student not found
         }
         return this.assignStudentToCatalogue(student, catalogueId);
+    }
+
+    public int insertCourseInstance(int catalogueId, Constants.Days day, int courseId, Collection<Teacher> teachers, LocalTime startTime, int duration) {
+        Course course = courseRepository.getCourseById(courseId);
+        if (course == null) {
+            return -1; // course not found
+        }
+        Catalogue catalogue = catalogueRepository.getCatalogueById(catalogueId);
+        if (catalogue == null) {
+            return -2; // catalogue not found
+        }
+        return catalogue.insertCourseInstance(new CourseInstance(course, teachers, startTime, duration), day);
+    }
+
+    public int insertCourseInstance(Catalogue catalogue, Constants.Days day, Course course, Collection<Teacher> teachers, LocalTime startTime, int duration) {
+        if (!this.catalogueRepository.catalogueExists(catalogue)) {
+            return -2; // catalogue not found
+        }
+        if(!this.courseRepository.courseExists(course)) {
+            return -1; // course not found
+        }
+        return catalogue.insertCourseInstance(new CourseInstance(course, teachers, startTime, duration), day);
     }
 }

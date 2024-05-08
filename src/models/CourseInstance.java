@@ -17,7 +17,8 @@ public class CourseInstance {
         this.courseInstanceId = nextCourseInstanceId++;
         this.course = course;
         this.teachers = new ArrayList<>();
-        this.teachers.addAll(teachers);
+        if(teachers != null)
+            this.teachers.addAll(teachers);
         this.startTime = startTime;
         this.duration = duration;
     }

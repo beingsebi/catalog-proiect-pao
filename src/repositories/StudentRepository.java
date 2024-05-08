@@ -49,4 +49,11 @@ public class StudentRepository implements StudentRepositoryI{
         }
         return student.getStudentId();
     }
+
+    @Override
+    public String toString() {
+        return "StudentRepository{" +
+                "students=" + students +
+                '}';
+    }
 }

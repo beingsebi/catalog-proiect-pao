@@ -108,4 +108,18 @@ public class Catalogue {
             classSupervisor = null;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Catalogue{" +
+                "catalogueId=" + catalogueId +
+                ", catalogueName='" + catalogueName + '\'' +
+                ", catalogueDescription='" + catalogueDescription + '\'' +
+                ", classYear=" + classYear +
+                ", classSymbol='" + classSymbol + '\'' +
+                ", studentRepository=" + studentRepository +
+                ", classSupervisor=" + classSupervisor +
+                ", courseInstanceRepository=" + courseInstanceRepository +
+                '}';
+    }
 }

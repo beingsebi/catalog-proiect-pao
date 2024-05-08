@@ -41,4 +41,15 @@ public class CourseRepository implements CourseRepositoryI{
         return course.getCourseId();
     }
 
+    @Override
+    public boolean courseExists(Course course) {
+        return courses.contains(course);
+    }
+
+    @Override
+    public String toString() {
+        return "CourseRepository{" +
+                "courses=" + courses +
+                '}';
+    }
 }
