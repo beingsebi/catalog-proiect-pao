@@ -1,73 +1,89 @@
 package repositories;
 
 import models.Catalogue;
-import models.Student;
 import models.Teacher;
+import shared.DbUtils;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class CatalogueRepository implements CatalogueRepositoryI {
-    public Set<Catalogue> catalogues;
-
-    public CatalogueRepository() {
-        this.catalogues = new HashSet<>();
-    }
 
     @Override
     public int insertCatalogue(Catalogue catalogue) {
-        catalogues.add(catalogue);
-        return catalogue.getCatalogueId();
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "INSERT INTO catalogues (name, description, class_year, class_symbol, supervisorId, courseInstanceRepoId) VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
+            int courseRepoId = CourseInstanceRepository.createCourseInstanceRepo();
+            if (courseRepoId == -1) {
+                return -1;
+            }
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, catalogue.getCatalogueName());
+            stmt.setString(2, catalogue.getCatalogueDescription());
+            stmt.setInt(3, catalogue.getClassYear());
+            stmt.setString(4, catalogue.getClassSymbol());
+            stmt.setInt(5, catalogue.getClassSupervisorId());
+            stmt.setInt(6, courseRepoId);
+            var rs = stmt.executeQuery();
+            rs.next();
+            int id = rs.getInt("id");
+            con.close();
+            return id;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     @Override
     public Catalogue getCatalogueById(int catalogueId) {
-        for (Catalogue catalogue : catalogues) {
-            if (catalogue.getCatalogueId() == catalogueId) {
-                return catalogue;
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "SELECT * FROM catalogues WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, catalogueId);
+            var rs = stmt.executeQuery();
+            if (!rs.next()) {
+                return null;
             }
+            Catalogue catalogue = new Catalogue(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("class_year"), rs.getString("class_symbol"), rs.getInt("supervisorId"), rs.getInt("courseInstanceRepoId"));
+            con.close();
+            return catalogue;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public int removeCatalogue(Catalogue catalogue) {
-        boolean ok = catalogues.remove(catalogue);
-        if (!ok) {
-            return -1;
+    public void removeCatalogue(int catalogueId) {
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "DELETE FROM catalogues WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, catalogueId);
+            stmt.executeUpdate();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return catalogue.getCatalogueId();
-    }
-
-    @Override
-    public int removeStudent(Student student) {
-//        for (Catalogue catalogue : catalogues) {
-//            if (catalogue.removeStudent(student) != -1) {
-//                return student.getStudentId();
-//            }
-//        }
-        return -1;
-    }
-
-    @Override
-    public boolean teacherExists(Teacher teacher) {
-        for (Catalogue catalogue : catalogues) {
-            if (catalogue.getAllTeachers().contains(teacher)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override
     public boolean catalogueExists(Catalogue catalogue) {
-        return catalogues.contains(catalogue);
+//        return catalogues.contains(catalogue);
+        return false;
     }
 
     @Override
     public void removeTeacher(Teacher teacher) {
-        for (Catalogue catalogue : catalogues) {
-            catalogue.removeTeacher(teacher);
-        }
+//        for (Catalogue catalogue : catalogues) {
+//            catalogue.removeTeacher(teacher);
+//        }
     }
 }

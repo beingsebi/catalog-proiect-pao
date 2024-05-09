@@ -1,16 +1,13 @@
 package services;
 
-import models.Catalogue;
-import models.Course;
-import models.Student;
-import models.Teacher;
-import repositories.CatalogueRepository;
-import repositories.CourseRepository;
-import repositories.StudentRepository;
-import repositories.TeacherRepository;
+import models.*;
+import repositories.*;
 import shared.Constants;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class ManagerService {
     private final StudentRepository studentRepository;
@@ -25,28 +22,20 @@ public class ManagerService {
         this.catalogueRepository = new CatalogueRepository();
     }
 
-    public int insertStudent(Student student) {
-        return studentRepository.insertStudent(student);
+    public int insertTeacher(Teacher teacher) {
+        return teacherRepository.insertTeacher(teacher);
     }
 
-    public int insertStudent(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Constants.Gender gender, String phoneString, int yearOfStudy) {
-        return studentRepository.insertStudent(new Student(null, firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearOfStudy));
-    }
-//
-//    public Student getStudentById(int studentId) {
-//        return studentRepository.getStudentById(studentId);
-//    }
-
-    public void insertTeacher(Teacher teacher) {
-        teacherRepository.insertTeacher(teacher);
-    }
-
-    public void insertTeacher(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Constants.Gender gender, String phoneString, int yearsOfExperience, String department, String specialization) {
-        teacherRepository.insertTeacher(new Teacher(firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearsOfExperience, department, specialization));
+    public int insertTeacher(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Constants.Gender gender, String phoneString, int yearsOfExperience, String department, String specialization) {
+        return teacherRepository.insertTeacher(new Teacher(firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearsOfExperience, department, specialization));
     }
 
     public Teacher getTeacherById(int teacherId) {
         return teacherRepository.getTeacherById(teacherId);
+    }
+
+    public ArrayList<Teacher> getAllTeachers() {
+        return teacherRepository.getAllTeachers();
     }
 
     public boolean teacherExists(int teacherId) {
@@ -117,16 +106,16 @@ public class ManagerService {
         teacherRepository.updateTeacher(teacherId, r);
     }
 
-    public void insertCourse(Course course) {
-        courseRepository.insertCourse(course);
+    public int insertCourse(Course course) {
+        return courseRepository.insertCourse(course);
     }
 
-    public void insertCourse(String courseName, String courseDescription) {
-        courseRepository.insertCourse(new Course(courseName, courseDescription));
+    public int insertCourse(String courseName, String courseDescription) {
+        return courseRepository.insertCourse(new Course(courseName, courseDescription));
     }
 
     public Course getCourseById(int courseId) {
-        return courseRepository.getCourseById(courseId);
+        return CourseRepository.getCourseById(courseId);
     }
 
     public void removeCourse(int courseId) {
@@ -138,33 +127,63 @@ public class ManagerService {
     }
 
     public void updateCourseName(int courseId, String courseName) {
-        Course r = courseRepository.getCourseById(courseId);
+        Course r = CourseRepository.getCourseById(courseId);
         r.setCourseName(courseName);
         courseRepository.updateCourse(courseId, r);
     }
 
     public void updateCourseDescription(int courseId, String courseDescription) {
-        Course r = courseRepository.getCourseById(courseId);
+        Course r = CourseRepository.getCourseById(courseId);
         r.setCourseDescription(courseDescription);
         courseRepository.updateCourse(courseId, r);
     }
 
+    public int createCourseInstanceRepo() {
+        return CourseInstanceRepository.createCourseInstanceRepo();
+    }
 
     public int insertCatalogue(Catalogue catalogue) {
         return catalogueRepository.insertCatalogue(catalogue);
     }
 
-    public int insertCatalogue(String catalogueName, String catalogueDescription, int classYear, String classSymbol) {
-        return catalogueRepository.insertCatalogue(new Catalogue(catalogueName, catalogueDescription, classYear, classSymbol));
+    public int insertStudent(Student student) {
+        return studentRepository.insertStudent(student);
+    }
+
+    public int insertCatalogue(String catalogueName, String catalogueDescription, int classYear, String classSymbol, int classSupervisorId) {
+        return catalogueRepository.insertCatalogue(new Catalogue(catalogueName, catalogueDescription, classYear, classSymbol, classSupervisorId));
     }
 
     public Catalogue getCatalogueById(int catalogueId) {
         return catalogueRepository.getCatalogueById(catalogueId);
     }
 
-    public int removeCatalogue(Catalogue catalogue) {
-        return catalogueRepository.removeCatalogue(catalogue);
+    public void removeCatalogue(int catalogueId) {
+        catalogueRepository.removeCatalogue(catalogueId);
     }
+
+    public int insertCourseInstance(int catalogueId, int courseId, Collection<Integer> teachersIds, LocalTime startTime, Constants.Days day, int duration) {
+        Catalogue catalogue = catalogueRepository.getCatalogueById(catalogueId);
+        if (catalogue == null) {
+            return -2; // catalogue not found
+        }
+        Course course = CourseRepository.getCourseById(courseId);
+        if (course == null) {
+            return -3; // course not found
+        }
+
+        return catalogue.getCourseInstanceRepository().insertCourseInstance(new CourseInstance(catalogue.getCourseInstanceRepository().getCourseInstanceRepositoryId(), course, teachersIds, startTime, day, duration));
+    }
+
+    public int insertStudent(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Constants.Gender gender, String phoneString, int yearOfStudy) {
+        return studentRepository.insertStudent(new Student(null, firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearOfStudy));
+    }
+
+    //
+//    public Student getStudentById(int studentId) {
+//        return studentRepository.getStudentById(studentId);
+//    }
+
 
 //    public int removeStudent(Student student) {
 //        if (studentRepository.removeStudent(student) == -1) {
@@ -173,9 +192,9 @@ public class ManagerService {
 //        return catalogueRepository.removeStudent(student);
 //    }
 
-    public boolean teacherIsActive(Teacher teacher) {
-        return catalogueRepository.teacherExists(teacher);
-    }
+//    public boolean teacherIsActive(Teacher teacher) {
+//        return catalogueRepository.teacherExists(teacher);
+//    }
 
 //    public boolean studentExists(Student student) {
 //        return studentRepository.studentExists(student);
@@ -190,21 +209,13 @@ public class ManagerService {
 //        catalogueRepository.removeTeacher(teacher);
     }
 
-    public int assignTeacherAsSupervisorToCatalogue(Teacher teacher, int catalogueId) {
+    public int assignTeacherAsSupervisorToCatalogue(int teacherId, int catalogueId) {
         Catalogue catalogue = catalogueRepository.getCatalogueById(catalogueId);
         if (catalogue == null) {
             return -1; // catalogue not found
         }
-        catalogue.setClassSupervisor(teacher);
-        return teacher.getTeacherId();
-    }
-
-    public int assignTeacherAsSupervisorToCatalogue(int teacherId, int catalogueId) {
-        Teacher teacher = teacherRepository.getTeacherById(teacherId);
-        if (teacher == null) {
-            return -2; // teacher not found
-        }
-        return this.assignTeacherAsSupervisorToCatalogue(teacher, catalogueId);
+        catalogue.setClassSupervisorId(teacherId);
+        return teacherId;
     }
 
 //    public int assignStudentToCatalogue(Student student, int catalogueId) {
@@ -223,26 +234,4 @@ public class ManagerService {
 //        return this.assignStudentToCatalogue(student, catalogueId);
 //    }
 
-//    public int insertCourseInstance(int catalogueId, Constants.Days day, int courseId, Collection<Teacher> teachers, LocalTime startTime, int duration) {
-//        Course course = courseRepository.getCourseById(courseId);
-//        if (course == null) {
-//            return -1; // course not found
-//        }
-//        Catalogue catalogue = catalogueRepository.getCatalogueById(catalogueId);
-//        if (catalogue == null) {
-//            return -2; // catalogue not found
-//        }
-//        int
-//        return catalogue.insertCourseInstance(new CourseInstance(course, teachers, startTime, day, duration));
-//    }
-//
-//    public int insertCourseInstance(Catalogue catalogue, Constants.Days day, Course course, Collection<Teacher> teachers, LocalTime startTime, int duration) {
-//        if (!this.catalogueRepository.catalogueExists(catalogue)) {
-//            return -2; // catalogue not found
-//        }
-//        if (!this.courseRepository.courseExists(course)) {
-//            return -1; // course not found
-//        }
-//        return catalogue.insertCourseInstance(new CourseInstance(course, teachers, startTime, day, duration));
-//    }
 }

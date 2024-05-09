@@ -9,11 +9,7 @@ public interface CatalogueRepositoryI {
 
     Catalogue getCatalogueById(int catalogueId);
 
-    int removeCatalogue(Catalogue catalogue);
-
-    int removeStudent(Student student);
-
-    boolean teacherExists(Teacher teacher);
+    void removeCatalogue(int catalogueId);
 
     boolean catalogueExists(Catalogue catalogue);
 

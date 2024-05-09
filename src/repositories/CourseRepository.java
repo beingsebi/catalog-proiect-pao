@@ -10,23 +10,26 @@ import java.sql.ResultSet;
 public class CourseRepository implements CourseRepositoryI {
 
     @Override
-    public void insertCourse(Course course) {
+    public int insertCourse(Course course) {
         try {
             Connection con = DbUtils.getConnection();
-            String sql = "INSERT INTO courses (courseName, courseDescription) VALUES (?, ?)";
+            String sql = "INSERT INTO courses (courseName, courseDescription) VALUES (?, ?) RETURNING id";
             assert con != null;
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, course.getCourseName());
             stmt.setString(2, course.getCourseDescription());
-            stmt.executeUpdate();
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            int id = rs.getInt("id");
             con.close();
+            return id;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
-    @Override
-    public Course getCourseById(int courseId) {
+    public static Course getCourseById(int courseId) {
         try {
             Connection con = DbUtils.getConnection();
             String sql = "SELECT * FROM courses WHERE id = ?";
@@ -39,7 +42,7 @@ public class CourseRepository implements CourseRepositoryI {
                 int id = rs.getInt("id");
                 String courseName = rs.getString("courseName");
                 String courseDescription = rs.getString("courseDescription");
-                return new Course(courseName, courseDescription);
+                return new Course(courseId, courseName, courseDescription);
             }
         } catch (Exception e) {
             e.printStackTrace();

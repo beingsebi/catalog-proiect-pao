@@ -1,31 +1,42 @@
 package models;
 
 import repositories.CourseInstanceRepository;
+import repositories.CourseInstanceRepositoryI;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Catalogue {
-    private static int nextCatalogueId = 0;
 
-    private final int catalogueId;
+    private Integer catalogueId;
     private final CourseInstanceRepository courseInstanceRepository;
     private String catalogueName;
     private String catalogueDescription;
     private int classYear;
     private String classSymbol;
-    private Teacher classSupervisor;
+    private int classSupervisorId;
 
 
-    public Catalogue(String catalogueName, String catalogueDescription, int classYear, String classSymbol) {
-        this.catalogueId = nextCatalogueId++;
+    public Catalogue(String catalogueName, String catalogueDescription, int classYear, String classSymbol, int classSupervisorId) {
+        this.catalogueId = null;
         this.catalogueName = catalogueName;
         this.catalogueDescription = catalogueDescription;
 
         this.classYear = classYear;
         this.classSymbol = classSymbol;
-        this.classSupervisor = null;
+        this.classSupervisorId = classSupervisorId;
         this.courseInstanceRepository = new CourseInstanceRepository();
+    }
+
+    public Catalogue(int id, String name, String description, int classYear, String classSymbol, int supervisorId, int courseInstanceRepoId) {
+        this.catalogueId = id;
+        this.catalogueName = name;
+        this.catalogueDescription = description;
+
+        this.classYear = classYear;
+        this.classSymbol = classSymbol;
+        this.classSupervisorId = classSupervisorId;
+        this.courseInstanceRepository = new CourseInstanceRepository(courseInstanceRepoId);
     }
 
     public int getCatalogueId() {
@@ -64,32 +75,27 @@ public class Catalogue {
         this.classSymbol = classSymbol;
     }
 
-    public Person getClassSupervisor() {
-        return classSupervisor;
+    public int getClassSupervisorId() {
+        return classSupervisorId;
     }
 
-    public void setClassSupervisor(Teacher classSupervisor) {
-        this.classSupervisor = classSupervisor;
+    public void setClassSupervisorId(int classSupervisorId) {
+        this.classSupervisorId = classSupervisorId;
     }
 
     public int insertCourseInstance(CourseInstance courseInstance) {
         return courseInstanceRepository.insertCourseInstance(courseInstance);
     }
 
-    public ArrayList<Integer> getAllTeachers() {
+    public ArrayList<Integer> getAllTeachersIds() {
         ArrayList<Integer> aux = courseInstanceRepository.getAllTeachersIds();
-        if (classSupervisor != null) {
-            aux.add(classSupervisor.getTeacherId());
-        }
         HashSet<Integer> curated = new HashSet<>(aux);
         return new ArrayList<>(curated);
     }
 
     public void removeTeacher(Teacher teacher) {
         courseInstanceRepository.removeCoursesOfTeacher(teacher.getTeacherId());
-        if (classSupervisor != null && classSupervisor.equals(teacher)) {
-            classSupervisor = null;
-        }
+
     }
 
     @Override
@@ -100,8 +106,12 @@ public class Catalogue {
                 ", catalogueDescription='" + catalogueDescription + '\'' +
                 ", classYear=" + classYear +
                 ", classSymbol='" + classSymbol + '\'' +
-                ", classSupervisor=" + classSupervisor +
+                ", classSupervisor=" + classSupervisorId +
                 ", courseInstanceRepository=" + courseInstanceRepository +
                 '}';
+    }
+
+    public CourseInstanceRepositoryI getCourseInstanceRepository() {
+        return courseInstanceRepository;
     }
 }

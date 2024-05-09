@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS Students;
 DROP TABLE IF EXISTS Catalogues;
-DROP TABLE IF EXISTS CourseInstance;
+DROP TABLE IF EXISTS CourseInstances;
 DROP TABLE IF EXISTS CourseInstanceRepositories;
 DROP TABLE IF EXISTS Courses;
 DROP TABLE IF EXISTS Teachers;
@@ -38,7 +38,7 @@ CREATE TABLE CourseInstanceRepositories
     id  SERIAL PRIMARY KEY
 );
 
-CREATE TABLE CourseInstance
+CREATE TABLE CourseInstances
 (
     id         SERIAL PRIMARY KEY,
     repoId 	   INT REFERENCES CourseInstanceRepositories (id),

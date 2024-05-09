@@ -2,10 +2,14 @@ package repositories;
 
 import models.Teacher;
 
+import java.util.ArrayList;
+
 public interface TeacherRepositoryI {
-    void insertTeacher(Teacher teacher);
+    int insertTeacher(Teacher teacher);
 
     Teacher getTeacherById(int teacherId);
+
+    ArrayList<Teacher> getAllTeachers();
 
     void removeTeacher(int teacherId);
 

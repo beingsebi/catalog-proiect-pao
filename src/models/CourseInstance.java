@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class CourseInstance {
-    private static int nextCourseInstanceId = 0;
 
-    private final int courseInstanceId;
+    private final Integer courseInstanceId;
     private int repoId;
     private Course course;
     private ArrayList<Integer> teachers;
@@ -17,8 +16,20 @@ public class CourseInstance {
     private Days day;
     private int duration;
 
+
+    public CourseInstance(int courseInstanceId, int repoId, Course course, Collection<Integer> teachers, LocalTime startTime, Days day, int duration) {
+        this.courseInstanceId = courseInstanceId;
+        this.repoId = repoId;
+        this.course = course;
+        this.teachers = new ArrayList<>();
+        if (teachers != null) this.teachers.addAll(teachers);
+        this.startTime = startTime;
+        this.day = day;
+        this.duration = duration;
+    }
+
     public CourseInstance(int repoId, Course course, Collection<Integer> teachers, LocalTime startTime, Days day, int duration) {
-        this.courseInstanceId = nextCourseInstanceId++;
+        this.courseInstanceId = null;
         this.repoId = repoId;
         this.course = course;
         this.teachers = new ArrayList<>();

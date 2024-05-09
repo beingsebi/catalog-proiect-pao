@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class TeacherRepository implements TeacherRepositoryI {
 
@@ -15,12 +16,12 @@ public class TeacherRepository implements TeacherRepositoryI {
     }
 
     @Override
-    public void insertTeacher(Teacher teacher) {
+    public int insertTeacher(Teacher teacher) {
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
 
-            String sql = "INSERT INTO Teachers (firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearsOfExperience, department, specialization) VALUES (?, ?, ?, ?, ?, ?::gender, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Teachers (firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearsOfExperience, department, specialization) VALUES (?, ?, ?, ?, ?, ?::gender, ?, ?, ?, ?) RETURNING id";
 
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, teacher.getFirstName());
@@ -33,11 +34,15 @@ public class TeacherRepository implements TeacherRepositoryI {
             stmt.setInt(8, teacher.getYearsOfExperience());
             stmt.setString(9, teacher.getDepartment());
             stmt.setString(10, teacher.getSpecialization());
-            stmt.executeUpdate();
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            int id = rs.getInt("id");
             con.close();
+            return id;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
     @Override
@@ -68,6 +73,38 @@ public class TeacherRepository implements TeacherRepositoryI {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public ArrayList<Teacher> getAllTeachers() {
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "SELECT * FROM Teachers";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<Teacher> teachers = new ArrayList<>();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String firstName = rs.getString("firstName");
+                String lastName = rs.getString("lastName");
+                LocalDate dateOfBirth = rs.getDate("dateOfBirth").toLocalDate();
+                String address = rs.getString("address");
+                String email = rs.getString("email");
+                Constants.Gender gender = Constants.Gender.valueOf(rs.getString("gender"));
+                String phoneString = rs.getString("phoneString");
+                int yearsOfExperience = rs.getInt("yearsOfExperience");
+                String department = rs.getString("department");
+                String specialization = rs.getString("specialization");
+                teachers.add(new Teacher(id, firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearsOfExperience, department, specialization));
+            }
+            con.close();
+            return teachers;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
     @Override
