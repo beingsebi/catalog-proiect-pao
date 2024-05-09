@@ -2,14 +2,12 @@ package models;
 
 public class Course {
 
-    private static int nextCourseId = 0;
-
-    private final int courseId;
+    private Integer courseId;
     private String courseName;
     private String courseDescription;
 
     public Course(String courseName, String courseDescription) {
-        this.courseId = nextCourseId++;
+        this.courseId = null;
         this.courseName = courseName;
         this.courseDescription = courseDescription;
     }

@@ -1,7 +1,6 @@
 package models;
 
 import repositories.CourseInstanceRepository;
-import repositories.StudentRepository;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,7 +9,6 @@ public class Catalogue {
     private static int nextCatalogueId = 0;
 
     private final int catalogueId;
-    private final StudentRepository studentRepository;
     private final CourseInstanceRepository courseInstanceRepository;
     private String catalogueName;
     private String catalogueDescription;
@@ -26,7 +24,6 @@ public class Catalogue {
 
         this.classYear = classYear;
         this.classSymbol = classSymbol;
-        this.studentRepository = new StudentRepository();
         this.classSupervisor = null;
         this.courseInstanceRepository = new CourseInstanceRepository();
     }
@@ -67,18 +64,6 @@ public class Catalogue {
         this.classSymbol = classSymbol;
     }
 
-    public int insertStudent(Student student) {
-        return studentRepository.insertStudent(student);
-    }
-
-    public Student getStudentById(int studentId) {
-        return studentRepository.getStudentById(studentId);
-    }
-
-    public int removeStudent(Student student) {
-        return studentRepository.removeStudent(student);
-    }
-
     public Person getClassSupervisor() {
         return classSupervisor;
     }
@@ -91,17 +76,17 @@ public class Catalogue {
         return courseInstanceRepository.insertCourseInstance(courseInstance);
     }
 
-    public ArrayList<Teacher> getAllTeachers() {
-        ArrayList<Teacher> aux = courseInstanceRepository.getAllTeachers();
-        if (classSupervisor != null && classSupervisor instanceof Teacher) {
-            aux.add(classSupervisor);
+    public ArrayList<Integer> getAllTeachers() {
+        ArrayList<Integer> aux = courseInstanceRepository.getAllTeachersIds();
+        if (classSupervisor != null) {
+            aux.add(classSupervisor.getTeacherId());
         }
-        HashSet<Teacher> curated = new HashSet<>(aux);
+        HashSet<Integer> curated = new HashSet<>(aux);
         return new ArrayList<>(curated);
     }
 
     public void removeTeacher(Teacher teacher) {
-        courseInstanceRepository.removeCoursesOfTeacher(teacher);
+        courseInstanceRepository.removeCoursesOfTeacher(teacher.getTeacherId());
         if (classSupervisor != null && classSupervisor.equals(teacher)) {
             classSupervisor = null;
         }
@@ -115,7 +100,6 @@ public class Catalogue {
                 ", catalogueDescription='" + catalogueDescription + '\'' +
                 ", classYear=" + classYear +
                 ", classSymbol='" + classSymbol + '\'' +
-                ", studentRepository=" + studentRepository +
                 ", classSupervisor=" + classSupervisor +
                 ", courseInstanceRepository=" + courseInstanceRepository +
                 '}';

@@ -3,13 +3,13 @@ package repositories;
 import models.Teacher;
 
 public interface TeacherRepositoryI {
-    int insertTeacher(Teacher teacher);
+    void insertTeacher(Teacher teacher);
 
     Teacher getTeacherById(int teacherId);
 
-    int removeTeacher(Teacher teacher);
+    void removeTeacher(int teacherId);
 
     boolean teacherExists(int teacherId);
 
-    boolean teacherExists(Teacher teacher);
+    void updateTeacher(int teacherId, Teacher teacher);
 }

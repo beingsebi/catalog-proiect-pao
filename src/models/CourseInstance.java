@@ -10,34 +10,32 @@ public class CourseInstance {
     private static int nextCourseInstanceId = 0;
 
     private final int courseInstanceId;
+    private int repoId;
     private Course course;
-    private ArrayList<Teacher> teachers;
+    private ArrayList<Integer> teachers;
     private LocalTime startTime;
     private Days day;
     private int duration;
 
-    public CourseInstance(Course course, Collection<Teacher> teachers, LocalTime startTime, Days day, int duration) {
+    public CourseInstance(int repoId, Course course, Collection<Integer> teachers, LocalTime startTime, Days day, int duration) {
         this.courseInstanceId = nextCourseInstanceId++;
+        this.repoId = repoId;
         this.course = course;
         this.teachers = new ArrayList<>();
-        if (teachers != null)
-            this.teachers.addAll(teachers);
+        if (teachers != null) this.teachers.addAll(teachers);
         this.startTime = startTime;
         this.day = day;
         this.duration = duration;
     }
 
+    public int getRepoId() {
+        return repoId;
+    }
+
 
     @Override
     public String toString() {
-        return "CourseInstance{" +
-                "courseInstanceId=" + courseInstanceId +
-                ", course=" + course +
-                ", teachers=" + teachers +
-                ", startTime=" + startTime +
-                ", day=" + day +
-                ", duration=" + duration +
-                '}';
+        return "CourseInstance{" + "courseInstanceId=" + courseInstanceId + ", course=" + course + ", teachers=" + teachers + ", startTime=" + startTime + ", day=" + day + ", duration=" + duration + '}';
     }
 
     @SuppressWarnings("unused")
@@ -56,13 +54,14 @@ public class CourseInstance {
     }
 
     @SuppressWarnings("unused")
-    public ArrayList<Teacher> getTeachers() {
+    public ArrayList<Integer> getTeachersIds() {
         return teachers;
     }
 
     @SuppressWarnings("unused")
-    public void setTeachers(ArrayList<Teacher> teachers) {
-        this.teachers = teachers;
+    public void setTeachers(ArrayList<Integer> teachers) {
+        this.teachers.clear();
+        this.teachers.addAll(teachers);
     }
 
     @SuppressWarnings("unused")
@@ -93,9 +92,8 @@ public class CourseInstance {
         this.day = day;
     }
 
-    public void addTeacher(Teacher teacher) {
-        if (teachers.contains(teacher))
-            return;
-        this.teachers.add(teacher);
+    public void addTeacher(Integer teacherId) {
+        if (teachers.contains(teacherId)) return;
+        this.teachers.add(teacherId);
     }
 }

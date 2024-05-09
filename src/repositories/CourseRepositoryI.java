@@ -3,11 +3,13 @@ package repositories;
 import models.Course;
 
 public interface CourseRepositoryI {
-    int insertCourse(Course course);
+    void insertCourse(Course course);
 
     Course getCourseById(int courseId);
 
-    int removeCourse(Course course);
+    void removeCourse(int courseId);
 
-    boolean courseExists(Course course);
+    boolean courseExists(int courseId);
+
+    void updateCourse(int courseId, Course course);
 }

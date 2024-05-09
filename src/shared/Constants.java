@@ -6,13 +6,13 @@ public class Constants {
 
         MALE {
             public String toString() {
-                return "Male";
+                return "MALE";
             }
         },
 
         FEMALE {
             public String toString() {
-                return "Female";
+                return "FEMALE";
             }
         }
     }
@@ -20,37 +20,37 @@ public class Constants {
     public enum Days {
         MONDAY {
             public String toString() {
-                return "Monday";
+                return "MONDAY";
             }
         },
         TUESDAY {
             public String toString() {
-                return "Tuesday";
+                return "TUESDAY";
             }
         },
         WEDNESDAY {
             public String toString() {
-                return "Wednesday";
+                return "WEDNESDAY";
             }
         },
         THURSDAY {
             public String toString() {
-                return "Thursday";
+                return "THURSDAY";
             }
         },
         FRIDAY {
             public String toString() {
-                return "Friday";
+                return "FRIDAY";
             }
         },
         SATURDAY {
             public String toString() {
-                return "Saturday";
+                return "SATURDAY";
             }
         },
         SUNDAY {
             public String toString() {
-                return "Sunday";
+                return "SUNDAY";
             }
         }
     }

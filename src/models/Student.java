@@ -9,10 +9,18 @@ public class Student extends Person implements Comparable<Student> {
 
     private final int studentId;
     private int yearOfStudy;
+    private int catalogueId;
 
-    public Student(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString, int yearOfStudy) {
+//    public Student(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString, int yearOfStudy) {
+//        super(firstName, lastName, dateOfBirth, address, email, gender, phoneString);
+//        this.studentId = nextStudentId++;
+//        this.yearOfStudy = yearOfStudy;
+//    }
+
+    public Student(Integer catalogueId, String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString, int yearOfStudy) {
         super(firstName, lastName, dateOfBirth, address, email, gender, phoneString);
         this.studentId = nextStudentId++;
+        this.catalogueId = catalogueId;
         this.yearOfStudy = yearOfStudy;
     }
 
@@ -23,6 +31,14 @@ public class Student extends Person implements Comparable<Student> {
             return aux;
         }
         return this.getFirstName().toLowerCase().compareTo(o.getFirstName().toLowerCase());
+    }
+
+    public int getCatalogueId() {
+        return catalogueId;
+    }
+
+    public void setCatalogueId(int catalogueId) {
+        this.catalogueId = catalogueId;
     }
 
     @SuppressWarnings("unused")

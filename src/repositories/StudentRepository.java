@@ -1,59 +1,90 @@
 package repositories;
 
 import models.Student;
+import org.postgresql.util.PGobject;
+import shared.DbUtils;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
-public class StudentRepository implements StudentRepositoryI {
-    private final Set<Student> students;
+public class StudentRepository /*implements StudentRepositoryI */{
+    private static int nextStudentRepoId = 0;
+    private final int studentRepoId;
 
+    //    private final Set<Student> students;
+//
     public StudentRepository() {
-        this.students = new HashSet<>();
+        this.studentRepoId = nextStudentRepoId++;
     }
 
-    @Override
+//    @Override
     public int insertStudent(Student student) {
-        students.add(student);
-        return student.getStudentId();
-    }
+        try {
+            Connection con = DbUtils.getConnection();
 
-    @Override
-    public Student getStudentById(int studentId) {
-        for (Student student : students) {
-            if (student.getStudentId() == studentId) {
-                return student;
-            }
-        }
-        return null;
-    }
+            PGobject studentObject = new PGobject();
+            studentObject.setType("student");
+            studentObject.setValue(String.format("(%d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d)",
+                    student.getId(),
+                    student.getFirstName(),
+                    student.getLastName(),
+                    student.getDateOfBirth(),
+                    student.getAddress(),
+                    student.getEmail(),
+                    student.getGender(),
+                    student.getPhoneString(),
+                    student.getYearOfStudy()
+            ));
 
-    @Override
-    public boolean studentExists(int studentId) {
-        for (Student student : students) {
-            if (student.getStudentId() == studentId) {
-                return true;
-            }
-        }
-        return false;
-    }
+            String sql = "UPDATE StudentRepositories SET students = array_append(students, ?) WHERE id = ?";
 
-    public boolean studentExists(Student student) {
-        return this.studentExists(student.getStudentId());
-    }
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setObject(1, studentObject);
+            stmt.setInt(2, this.studentRepoId);
 
-    @Override
-    public int removeStudent(Student student) {
-        if (!students.remove(student)) {
+        } catch (Exception e) {
+            e.printStackTrace();
             return -1;
         }
-        return student.getStudentId();
+        return student.getId();
     }
 
-    @Override
-    public String toString() {
-        return "StudentRepository{" +
-                "students=" + students +
-                '}';
-    }
+//    @Override
+//    public Student getStudentById(int studentId) {
+//        for (Student student : students) {
+//            if (student.getStudentId() == studentId) {
+//                return student;
+//            }
+//        }
+//        return null;
+//    }
+//
+//    @Override
+//    public boolean studentExists(int studentId) {
+//        for (Student student : students) {
+//            if (student.getStudentId() == studentId) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    public boolean studentExists(Student student) {
+//        return this.studentExists(student.getStudentId());
+//    }
+//
+//    @Override
+//    public int removeStudent(Student student) {
+//        if (!students.remove(student)) {
+//            return -1;
+//        }
+//        return student.getStudentId();
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return "StudentRepository{" +
+//                "students=" + students +
+//                '}';
+//    }
 }

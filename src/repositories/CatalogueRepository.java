@@ -41,11 +41,11 @@ public class CatalogueRepository implements CatalogueRepositoryI {
 
     @Override
     public int removeStudent(Student student) {
-        for (Catalogue catalogue : catalogues) {
-            if (catalogue.removeStudent(student) != -1) {
-                return student.getStudentId();
-            }
-        }
+//        for (Catalogue catalogue : catalogues) {
+//            if (catalogue.removeStudent(student) != -1) {
+//                return student.getStudentId();
+//            }
+//        }
         return -1;
     }
 

@@ -5,6 +5,8 @@ import shared.Constants.Gender;
 import java.time.LocalDate;
 
 public class Person {
+
+    private Integer personId;
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
@@ -13,7 +15,6 @@ public class Person {
     private Gender gender;
     private String phoneString;
 
-    @SuppressWarnings("unused")
     public Person(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,29 +25,27 @@ public class Person {
         this.phoneString = phoneString;
     }
 
+    public Person(int personId, String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString) {
+        this(firstName, lastName, dateOfBirth, address, email, gender,phoneString);
+        this.personId = personId;
+    }
 
-    @SuppressWarnings("unused")
+    public Integer getId() {
+        return personId;
+    }
+
     public String getFirstName() {
         return firstName;
     }
 
-    @SuppressWarnings("unused")
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    @SuppressWarnings("unused")
     public String getLastName() {
         return lastName;
     }
 
-    /**
-     * Sets the last name of this Person.
-     * If you call this for a student, you might want to call ClassRoom.reorderStudents() after
-     * calling this method for all the classrooms in which this person is a student.
-     *
-     * @param lastName the new last name of this Person
-     */
     @SuppressWarnings("unused")
     public void setLastName(String lastName) {
         this.lastName = lastName;

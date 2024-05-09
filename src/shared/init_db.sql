@@ -1,33 +1,15 @@
+DROP TABLE IF EXISTS Students;
 DROP TABLE IF EXISTS Catalogues;
+DROP TABLE IF EXISTS CourseInstance;
 DROP TABLE IF EXISTS CourseInstanceRepositories;
-DROP TABLE IF EXISTS StudentRepositories;
-DROP TYPE IF EXISTS Student;
-DROP TABLE IF EXISTS Teachers;
-DROP TYPE IF EXISTS CourseInstance;
 DROP TABLE IF EXISTS Courses;
+DROP TABLE IF EXISTS Teachers;
+DROP TYPE IF EXISTS Days;
 DROP TYPE IF EXISTS Gender;
 
 
-CREATE TYPE Gender AS ENUM ('Male', 'Female');
-
-CREATE TYPE Student AS
-(
-    id          INT,
-    firstName   VARCHAR(255),
-    lastName    VARCHAR(255),
-    dateOfBirth DATE,
-    address     TEXT,
-    email       VARCHAR(255),
-    gender      Gender,
-    phoneString VARCHAR(255),
-    yearOfStudy INT
-);
-
-CREATE TABLE StudentRepositories
-(
-    id       SERIAL PRIMARY KEY,
-    students Student[]
-);
+CREATE TYPE Gender AS ENUM ('MALE', 'FEMALE');
+CREATE TYPE Days AS ENUM ('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY');
 
 CREATE TABLE Teachers
 (
@@ -51,19 +33,20 @@ CREATE TABLE Courses
     courseDescription VARCHAR(255) NOT NULL
 );
 
-CREATE TYPE CourseInstance AS
-(
-    id         INT,
-    courseId   INT,
-    teacherIds INT[],
-    startTime  TIME,
-    duration   INT
-);
-
 CREATE TABLE CourseInstanceRepositories
 (
-    id              SERIAL PRIMARY KEY,
-    courseInstances courseInstance[]
+    id  SERIAL PRIMARY KEY
+);
+
+CREATE TABLE CourseInstance
+(
+    id         SERIAL PRIMARY KEY,
+    repoId 	   INT REFERENCES CourseInstanceRepositories (id),
+    courseId   INT REFERENCES Courses (id),
+    teacherIds INT[],
+    startTime  TIME,
+    day 	   Days,
+    duration   INT
 );
 
 CREATE TABLE Catalogues
@@ -73,7 +56,20 @@ CREATE TABLE Catalogues
     description          VARCHAR(255),
     class_year           INT,
     class_symbol         VARCHAR(255),
-    studentRepoId        INT REFERENCES studentrepositories (id),
     supervisorId         INT REFERENCES teachers (id),
     courseInstanceRepoId INT REFERENCES CourseInstanceRepositories (id)
 );
+
+CREATE TABLE Students
+(
+    id          INT PRIMARY KEY,
+    firstName   VARCHAR(255),
+    lastName    VARCHAR(255),
+    dateOfBirth DATE,
+    address     VARCHAR(255),
+    email       VARCHAR(255),
+    gender      Gender,
+    phoneString VARCHAR(255),
+    yearOfStudy INT
+);
+

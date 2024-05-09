@@ -8,10 +8,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CourseInstanceRepository implements CourseInstanceRepositoryI {
+    private static int nextCourseInstanceId = 0;
+
+    private final int repoId;
+
     private final Set<CourseInstance> courseInstances;
 
     public CourseInstanceRepository() {
+        this.repoId = nextCourseInstanceId++;
         this.courseInstances = new HashSet<>();
+    }
+
+    public int getCourseInstanceId() {
+        return repoId;
     }
 
     @Override
@@ -41,17 +50,17 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
     }
 
     @Override
-    public ArrayList<Teacher> getAllTeachers() {
-        ArrayList<Teacher> teachers = new ArrayList<>();
+    public ArrayList<Integer> getAllTeachersIds() {
+        ArrayList<Integer> teachers = new ArrayList<>();
         for (CourseInstance courseInstance : courseInstances) {
-            teachers.addAll(courseInstance.getTeachers());
+            teachers.addAll(courseInstance.getTeachersIds());
         }
         return teachers;
     }
 
     @Override
-    public void removeCoursesOfTeacher(Teacher teacher) {
-        this.courseInstances.removeIf(courseInstance -> courseInstance.getTeachers().contains(teacher));
+    public void removeCoursesOfTeacher(Integer teacherId) {
+        this.courseInstances.removeIf(courseInstance -> courseInstance.getTeachersIds().contains(teacherId));
     }
 
     @Override

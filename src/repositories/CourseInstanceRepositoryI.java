@@ -12,9 +12,9 @@ public interface CourseInstanceRepositoryI {
 
     int removeCourseInstance(CourseInstance courseInstance);
 
-    ArrayList<Teacher> getAllTeachers();
+    ArrayList<Integer> getAllTeachersIds();
 
-    void removeCoursesOfTeacher(Teacher teacher);
+    void removeCoursesOfTeacher(Integer teacherId);
 
     void reset();
 }
