@@ -1,6 +1,7 @@
 package repositories;
 
 import models.Student;
+import services.CSVService;
 import shared.Constants;
 import shared.DbUtils;
 
@@ -13,6 +14,7 @@ public class StudentRepository implements StudentRepositoryI {
 
     @Override
     public int insertStudent(Student student) {
+        CSVService.WriteAction("insertStudent");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -41,6 +43,7 @@ public class StudentRepository implements StudentRepositoryI {
 
     @Override
     public Student getStudentById(int studentId) {
+        CSVService.WriteAction("getStudentById");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -64,6 +67,7 @@ public class StudentRepository implements StudentRepositoryI {
 
     @Override
     public boolean studentExists(int studentId) {
+        CSVService.WriteAction("studentExists");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -86,6 +90,7 @@ public class StudentRepository implements StudentRepositoryI {
 
     @Override
     public ArrayList<Student> getAllStudents() {
+        CSVService.WriteAction("getAllStudents");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -109,6 +114,7 @@ public class StudentRepository implements StudentRepositoryI {
 
     @Override
     public void updateStudent(int studentId, Student student) {
+        CSVService.WriteAction("updateStudent");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -134,6 +140,7 @@ public class StudentRepository implements StudentRepositoryI {
 
     @Override
     public boolean removeStudent(Student student) {
+        CSVService.WriteAction("removeStudent");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -148,6 +155,5 @@ public class StudentRepository implements StudentRepositoryI {
         }
         return false;
     }
-
 
 }

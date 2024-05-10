@@ -1,6 +1,7 @@
 package repositories;
 
 import models.Teacher;
+import services.CSVService;
 import shared.Constants;
 import shared.DbUtils;
 
@@ -12,11 +13,9 @@ import java.util.ArrayList;
 
 public class TeacherRepository implements TeacherRepositoryI {
 
-    public TeacherRepository() {
-    }
-
     @Override
     public int insertTeacher(Teacher teacher) {
+        CSVService.WriteAction("insertTeacher");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -47,6 +46,7 @@ public class TeacherRepository implements TeacherRepositoryI {
 
     @Override
     public Teacher getTeacherById(int teacherId) {
+        CSVService.WriteAction("getTeacherById");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -77,6 +77,7 @@ public class TeacherRepository implements TeacherRepositoryI {
 
     @Override
     public ArrayList<Teacher> getAllTeachers() {
+        CSVService.WriteAction("getAllTeachers");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -109,6 +110,7 @@ public class TeacherRepository implements TeacherRepositoryI {
 
     @Override
     public void removeTeacher(int teacherId) {
+        CSVService.WriteAction("removeTeacher");
         try {
             Connection conn = DbUtils.getConnection();
             assert conn != null;
@@ -125,6 +127,7 @@ public class TeacherRepository implements TeacherRepositoryI {
 
     @Override
     public boolean teacherExists(int teacherId) {
+        CSVService.WriteAction("teacherExists");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -145,6 +148,7 @@ public class TeacherRepository implements TeacherRepositoryI {
 
     @Override
     public void updateTeacher(int teacherId, Teacher teacher) {
+        CSVService.WriteAction("updateTeacher");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -170,6 +174,7 @@ public class TeacherRepository implements TeacherRepositoryI {
 
     @Override
     public boolean teacherIsActive(Teacher teacher) {
+        CSVService.WriteAction("teacherIsActive");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;

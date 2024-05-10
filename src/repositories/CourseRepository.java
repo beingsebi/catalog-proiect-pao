@@ -1,6 +1,7 @@
 package repositories;
 
 import models.Course;
+import services.CSVService;
 import shared.DbUtils;
 
 import java.sql.Connection;
@@ -11,6 +12,7 @@ public class CourseRepository implements CourseRepositoryI {
 
     @Override
     public int insertCourse(Course course) {
+        CSVService.WriteAction("insertCourse");
         try {
             Connection con = DbUtils.getConnection();
             String sql = "INSERT INTO courses (courseName, courseDescription) VALUES (?, ?) RETURNING id";
@@ -30,6 +32,7 @@ public class CourseRepository implements CourseRepositoryI {
     }
 
     public static Course getCourseById(int courseId) {
+        CSVService.WriteAction("getCourseById");
         try {
             Connection con = DbUtils.getConnection();
             String sql = "SELECT * FROM courses WHERE id = ?";
@@ -52,6 +55,7 @@ public class CourseRepository implements CourseRepositoryI {
 
     @Override
     public void removeCourse(int courseId) {
+        CSVService.WriteAction("removeCourse");
         try {
             Connection con = DbUtils.getConnection();
             String sql = "DELETE FROM courses WHERE id = ?";
@@ -67,6 +71,7 @@ public class CourseRepository implements CourseRepositoryI {
 
     @Override
     public boolean courseExists(int courseId) {
+        CSVService.WriteAction("courseExists");
         try {
             Connection con = DbUtils.getConnection();
             String sql = "SELECT * FROM courses WHERE id = ?";
@@ -84,6 +89,7 @@ public class CourseRepository implements CourseRepositoryI {
 
     @Override
     public void updateCourse(int courseId, Course course) {
+        CSVService.WriteAction("updateCourse");
         try {
             Connection con = DbUtils.getConnection();
             String sql = "UPDATE courses SET courseName = ?, courseDescription = ? WHERE id = ?";

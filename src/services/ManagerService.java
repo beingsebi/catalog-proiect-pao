@@ -14,12 +14,20 @@ public class ManagerService {
     private final TeacherRepository teacherRepository;
     private final CourseRepository courseRepository;
     private final CatalogueRepository catalogueRepository;
+    static private ManagerService ms;
 
-    public ManagerService() {
+    private ManagerService() {
         this.studentRepository = new StudentRepository();
         this.teacherRepository = new TeacherRepository();
         this.courseRepository = new CourseRepository();
         this.catalogueRepository = new CatalogueRepository();
+    }
+
+    public static ManagerService getInstance() {
+        if (ms == null) {
+            ms = new ManagerService();
+        }
+        return ms;
     }
 
     public int insertTeacher(Teacher teacher) {

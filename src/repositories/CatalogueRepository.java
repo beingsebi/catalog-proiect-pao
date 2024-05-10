@@ -1,6 +1,7 @@
 package repositories;
 
 import models.Catalogue;
+import services.CSVService;
 import shared.DbUtils;
 
 import java.sql.Connection;
@@ -10,6 +11,7 @@ public class CatalogueRepository implements CatalogueRepositoryI {
 
     @Override
     public int insertCatalogue(Catalogue catalogue) {
+        CSVService.WriteAction("insertCatalogue");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -39,6 +41,7 @@ public class CatalogueRepository implements CatalogueRepositoryI {
 
     @Override
     public Catalogue getCatalogueById(int catalogueId) {
+        CSVService.WriteAction("getCatalogueById");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -61,6 +64,7 @@ public class CatalogueRepository implements CatalogueRepositoryI {
 
     @Override
     public void removeCatalogue(int catalogueId) {
+        CSVService.WriteAction("removeCatalogue");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -76,6 +80,7 @@ public class CatalogueRepository implements CatalogueRepositoryI {
 
     @Override
     public boolean catalogueExists(int catalogueId) {
+        CSVService.WriteAction("catalogueExists");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -93,6 +98,7 @@ public class CatalogueRepository implements CatalogueRepositoryI {
 
     @Override
     public void updateCatalogue(int catalogueId, Catalogue catalogue) {
+        CSVService.WriteAction("updateCatalogue");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;

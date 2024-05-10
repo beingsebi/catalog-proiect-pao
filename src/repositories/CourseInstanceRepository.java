@@ -2,6 +2,7 @@ package repositories;
 
 import models.Course;
 import models.CourseInstance;
+import services.CSVService;
 import shared.Constants;
 import shared.DbUtils;
 
@@ -14,6 +15,7 @@ import java.util.Collections;
 public class CourseInstanceRepository implements CourseInstanceRepositoryI {
 
     public static int createCourseInstanceRepo() {
+        CSVService.WriteAction("createCourseInstanceRepo");
         try {
             Connection con = DbUtils.getConnection();
             String sql = "INSERT INTO courseinstancerepositories DEFAULT VALUES RETURNING id";
@@ -34,6 +36,7 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
 
     @Override
     public int getCourseInstanceRepositoryId() {
+        CSVService.WriteAction("getCourseInstanceRepositoryId");
         if (courseInstanceRepositoryId == null) {
             courseInstanceRepositoryId = createCourseInstanceRepo();
         }
@@ -50,6 +53,7 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
 
     @Override
     public int insertCourseInstance(CourseInstance courseInstance) {
+        CSVService.WriteAction("insertCourseInstance");
         if (this.courseInstanceRepositoryId == null) {
             return -1;
         }
@@ -78,6 +82,7 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
 
     @Override
     public CourseInstance getCourseInstanceById(int courseInstanceId) {
+        CSVService.WriteAction("getCourseInstanceById");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -106,6 +111,7 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
 
     @Override
     public boolean removeCourseInstance(CourseInstance courseInstance) {
+        CSVService.WriteAction("removeCourseInstance");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -123,6 +129,7 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
 
     @Override
     public ArrayList<Integer> getAllTeachersIds() {
+        CSVService.WriteAction("getAllTeachersIds");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -144,6 +151,7 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
 
     @Override
     public void removeCourseInstancesOfTeacher(Integer teacherId) {
+        CSVService.WriteAction("removeCourseInstancesOfTeacher");
         try {
             Connection con = DbUtils.getConnection();
             assert con != null;
@@ -160,6 +168,7 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
 
     @Override
     public void reset() {
+        CSVService.WriteAction("resetCourseInstanceRepository");
         if (this.courseInstanceRepositoryId == null) {
             return;
         }

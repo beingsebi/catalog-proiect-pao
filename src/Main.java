@@ -1,17 +1,13 @@
 import models.Catalogue;
-import models.Student;
+import services.CSVService;
 import services.ManagerService;
-import shared.Constants;
-
-import java.time.LocalDate;
-
 
 public class Main {
     public static void main(String[] args) {
-
-        ManagerService managerService = new ManagerService();
+        CSVService.WriteAction("Test action");
+        ManagerService managerService = ManagerService.getInstance();
         Catalogue c =managerService.getCatalogueById(1);
-        c.setCatalogueName("111111111111111");
+        c.setCatalogueName("sssss111111111111111");
         managerService.updateCatalogue(1,c);
 //        int crs = managerService.insertCourse("Python Programming", "A course about Python programming");
 //        int crsinst = managerService.insertCourseInstance(1, crs, new ArrayList<>(List.of(tch)), LocalTime.now(), Constants.Days.FRIDAY,2);
