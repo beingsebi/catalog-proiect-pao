@@ -32,6 +32,7 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
 
     public Integer courseInstanceRepositoryId;
 
+    @Override
     public int getCourseInstanceRepositoryId() {
         if (courseInstanceRepositoryId == null) {
             courseInstanceRepositoryId = createCourseInstanceRepo();
@@ -104,27 +105,57 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
     }
 
     @Override
-    public int removeCourseInstance(CourseInstance courseInstance) {
-//        if (!courseInstances.remove(courseInstance)) {
-//            return -1;
-//        }
-//        return courseInstance.getCourseInstanceId();
-        return -1;
+    public boolean removeCourseInstance(CourseInstance courseInstance) {
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "DELETE FROM courseInstances WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, courseInstance.getCourseInstanceId());
+            stmt.executeUpdate();
+            con.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
     public ArrayList<Integer> getAllTeachersIds() {
-//        ArrayList<Integer> teachers = new ArrayList<>();
-//        for (CourseInstance courseInstance : courseInstances) {
-//            teachers.addAll(courseInstance.getTeachersIds());
-//        }
-//        return teachers;
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "SELECT teacherIds FROM courseInstances WHERE repoId = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, this.courseInstanceRepositoryId);
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<Integer> teachers = new ArrayList<>();
+            while (rs.next()) {
+                Collections.addAll(teachers, (Integer[]) rs.getArray("teacherIds").getArray());
+            }
+            con.close();
+            return teachers;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
-    public void removeCoursesOfTeacher(Integer teacherId) {
-//        this.courseInstances.removeIf(courseInstance -> courseInstance.getTeachersIds().contains(teacherId));
+    public void removeCourseInstancesOfTeacher(Integer teacherId) {
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "DELETE FROM courseInstances WHERE repoId = ? AND ? = ANY(teacherIds)";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, this.courseInstanceRepositoryId);
+            stmt.setInt(2, teacherId);
+            stmt.executeUpdate();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -16,4 +16,7 @@ public interface TeacherRepositoryI {
     boolean teacherExists(int teacherId);
 
     void updateTeacher(int teacherId, Teacher teacher);
+
+    boolean teacherIsActive(Teacher teacher);
+
 }

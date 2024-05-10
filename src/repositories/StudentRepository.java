@@ -1,90 +1,128 @@
 package repositories;
 
 import models.Student;
-import org.postgresql.util.PGobject;
+import shared.Constants;
 import shared.DbUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
-public class StudentRepository /*implements StudentRepositoryI */{
-    private static int nextStudentRepoId = 0;
-    private final int studentRepoId;
+public class StudentRepository implements StudentRepositoryI {
 
-    //    private final Set<Student> students;
-//
-    public StudentRepository() {
-        this.studentRepoId = nextStudentRepoId++;
-    }
-
-//    @Override
+    @Override
     public int insertStudent(Student student) {
         try {
             Connection con = DbUtils.getConnection();
-
-            PGobject studentObject = new PGobject();
-            studentObject.setType("student");
-            studentObject.setValue(String.format("(%d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d)",
-                    student.getId(),
-                    student.getFirstName(),
-                    student.getLastName(),
-                    student.getDateOfBirth(),
-                    student.getAddress(),
-                    student.getEmail(),
-                    student.getGender(),
-                    student.getPhoneString(),
-                    student.getYearOfStudy()
-            ));
-
-            String sql = "UPDATE StudentRepositories SET students = array_append(students, ?) WHERE id = ?";
-
+            assert con != null;
+            String sql = "INSERT INTO students (catalogueId, firstName, lastName, dateOfBirth, address," +
+                    "email, gender, phoneString, yearOfStudy) VALUES (?,?,?,?,?,?,?,?,?) RETURNING id";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setObject(1, studentObject);
-            stmt.setInt(2, this.studentRepoId);
-
+            stmt.setInt(1, student.getCatalogueId());
+            stmt.setString(2, student.getFirstName());
+            stmt.setString(3, student.getLastName());
+            stmt.setDate(4, java.sql.Date.valueOf(student.getDateOfBirth()));
+            stmt.setString(5, student.getAddress());
+            stmt.setString(6, student.getEmail());
+            stmt.setObject(7, student.getGender().toString(), java.sql.Types.OTHER);
+            stmt.setString(8, student.getPhoneString());
+            stmt.setInt(9, student.getYearOfStudy());
+            var rs = stmt.executeQuery();
+            rs.next();
+            int id = rs.getInt("id");
+            con.close();
+            return id;
         } catch (Exception e) {
             e.printStackTrace();
-            return -1;
         }
-        return student.getId();
+        return -1;
     }
 
-//    @Override
-//    public Student getStudentById(int studentId) {
-//        for (Student student : students) {
-//            if (student.getStudentId() == studentId) {
-//                return student;
-//            }
-//        }
-//        return null;
-//    }
-//
-//    @Override
-//    public boolean studentExists(int studentId) {
-//        for (Student student : students) {
-//            if (student.getStudentId() == studentId) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    public boolean studentExists(Student student) {
-//        return this.studentExists(student.getStudentId());
-//    }
-//
-//    @Override
-//    public int removeStudent(Student student) {
-//        if (!students.remove(student)) {
-//            return -1;
-//        }
-//        return student.getStudentId();
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "StudentRepository{" +
-//                "students=" + students +
-//                '}';
-//    }
+    @Override
+    public Student getStudentById(int studentId) {
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "SELECT * FROM students WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, studentId);
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            Student student = new Student(rs.getInt("id"), rs.getInt("catalogueId"), rs.getString("firstName"), rs.getString("lastName"),
+                    rs.getDate("dateOfBirth").toLocalDate(), rs.getString("address"), rs.getString("email"), Constants.Gender.valueOf(rs.getString("gender")),
+                    rs.getString("phoneString"), rs.getInt("yearOfStudy"));
+            con.close();
+            return student;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean studentExists(int studentId) {
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "SELECT * FROM students WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, studentId);
+            ResultSet rs = stmt.executeQuery();
+            boolean exists = rs.next();
+            con.close();
+            return exists;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean studentExists(Student student) {
+        return this.studentExists(student.getStudentId());
+    }
+
+    @Override
+    public ArrayList<Student> getAllStudents() {
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "SELECT * FROM students";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<Student> students = new ArrayList<>();
+            while (rs.next()) {
+                Student student = new Student(rs.getInt("id"), rs.getInt("catalogueId"), rs.getString("firstName"), rs.getString("lastName"),
+                        rs.getDate("dateOfBirth").toLocalDate(), rs.getString("address"), rs.getString("email"), Constants.Gender.valueOf(rs.getString("gender")),
+                        rs.getString("phoneString"), rs.getInt("yearOfStudy"));
+                students.add(student);
+            }
+            con.close();
+            return students;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean removeStudent(Student student) {
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "DELETE FROM students WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, student.getStudentId());
+            int rows = stmt.executeUpdate();
+            con.close();
+            return rows > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
 }

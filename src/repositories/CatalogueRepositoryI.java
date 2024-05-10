@@ -11,7 +11,6 @@ public interface CatalogueRepositoryI {
 
     void removeCatalogue(int catalogueId);
 
-    boolean catalogueExists(Catalogue catalogue);
+    boolean catalogueExists(int catalogueId);
 
-    void removeTeacher(Teacher teacher);
 }

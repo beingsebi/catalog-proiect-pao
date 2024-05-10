@@ -167,4 +167,29 @@ public class TeacherRepository implements TeacherRepositoryI {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public boolean teacherIsActive(Teacher teacher) {
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "SELECT * FROM catalogues WHERE supervisorId = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, teacher.getTeacherId());
+            var rs = stmt.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+
+            sql = "SELECT * FROM courseInstances WHERE ? = ANY(teacherIds)";
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, teacher.getTeacherId());
+            rs = stmt.executeQuery();
+            con.close();
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

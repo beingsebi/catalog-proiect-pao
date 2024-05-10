@@ -5,23 +5,21 @@ import shared.Constants.Gender;
 import java.time.LocalDate;
 
 public class Student extends Person implements Comparable<Student> {
-    private static int nextStudentId = 0;
 
-    private final int studentId;
+    private Integer studentId;
     private int yearOfStudy;
     private int catalogueId;
 
-//    public Student(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString, int yearOfStudy) {
-//        super(firstName, lastName, dateOfBirth, address, email, gender, phoneString);
-//        this.studentId = nextStudentId++;
-//        this.yearOfStudy = yearOfStudy;
-//    }
-
-    public Student(Integer catalogueId, String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString, int yearOfStudy) {
+    public Student(int catalogueId, String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString, int yearOfStudy) {
         super(firstName, lastName, dateOfBirth, address, email, gender, phoneString);
-        this.studentId = nextStudentId++;
+        this.studentId = null;
         this.catalogueId = catalogueId;
         this.yearOfStudy = yearOfStudy;
+    }
+
+    public Student(int studentId, int catalogueId, String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString, int yearOfStudy) {
+        this(catalogueId, firstName, lastName, dateOfBirth,address,email,gender,phoneString,yearOfStudy);
+        this.studentId = studentId;
     }
 
     @Override

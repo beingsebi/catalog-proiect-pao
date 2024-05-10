@@ -10,11 +10,11 @@ public interface CourseInstanceRepositoryI {
 
     CourseInstance getCourseInstanceById(int courseInstanceId);
 
-    int removeCourseInstance(CourseInstance courseInstance);
+    boolean removeCourseInstance(CourseInstance courseInstance);
 
     ArrayList<Integer> getAllTeachersIds();
 
-    void removeCoursesOfTeacher(Integer teacherId);
+    void removeCourseInstancesOfTeacher(Integer teacherId);
 
     void reset();
 

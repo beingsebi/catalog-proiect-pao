@@ -62,7 +62,8 @@ CREATE TABLE Catalogues
 
 CREATE TABLE Students
 (
-    id          INT PRIMARY KEY,
+    id          SERIAL PRIMARY KEY,
+    catalogueId INT REFERENCES Catalogues (id),
     firstName   VARCHAR(255),
     lastName    VARCHAR(255),
     dateOfBirth DATE,
@@ -72,4 +73,3 @@ CREATE TABLE Students
     phoneString VARCHAR(255),
     yearOfStudy INT
 );
-

@@ -50,7 +50,8 @@ public class CatalogueRepository implements CatalogueRepositoryI {
             if (!rs.next()) {
                 return null;
             }
-            Catalogue catalogue = new Catalogue(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("class_year"), rs.getString("class_symbol"), rs.getInt("supervisorId"), rs.getInt("courseInstanceRepoId"));
+            Catalogue catalogue = new Catalogue(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("class_year"),
+                    rs.getString("class_symbol"), rs.getInt("supervisorId"), rs.getInt("courseInstanceRepoId"));
             con.close();
             return catalogue;
         } catch (Exception e) {
@@ -75,15 +76,28 @@ public class CatalogueRepository implements CatalogueRepositoryI {
     }
 
     @Override
-    public boolean catalogueExists(Catalogue catalogue) {
-//        return catalogues.contains(catalogue);
+    public boolean catalogueExists(int catalogueId) {
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "SELECT * FROM catalogues WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, catalogueId);
+            var rs = stmt.executeQuery();
+            con.close();
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
     @Override
-    public void removeTeacher(Teacher teacher) {
+    public void removeCoursesOfTeacher(Teacher teacher) {
 //        for (Catalogue catalogue : catalogues) {
-//            catalogue.removeTeacher(teacher);
+//            catalogue.removeCoursesOfTeacher(teacher);
 //        }
     }
+
+
 }

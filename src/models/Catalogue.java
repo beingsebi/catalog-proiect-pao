@@ -35,7 +35,7 @@ public class Catalogue {
 
         this.classYear = classYear;
         this.classSymbol = classSymbol;
-        this.classSupervisorId = classSupervisorId;
+        this.classSupervisorId = supervisorId;
         this.courseInstanceRepository = new CourseInstanceRepository(courseInstanceRepoId);
     }
 
@@ -93,9 +93,8 @@ public class Catalogue {
         return new ArrayList<>(curated);
     }
 
-    public void removeTeacher(Teacher teacher) {
-        courseInstanceRepository.removeCoursesOfTeacher(teacher.getTeacherId());
-
+    public void removeCoursesOfTeacher(Teacher teacher) {
+        courseInstanceRepository.removeCourseInstancesOfTeacher(teacher.getTeacherId());
     }
 
     @Override

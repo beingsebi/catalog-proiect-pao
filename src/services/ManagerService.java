@@ -175,63 +175,62 @@ public class ManagerService {
         return catalogue.getCourseInstanceRepository().insertCourseInstance(new CourseInstance(catalogue.getCourseInstanceRepository().getCourseInstanceRepositoryId(), course, teachersIds, startTime, day, duration));
     }
 
-    public int insertStudent(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Constants.Gender gender, String phoneString, int yearOfStudy) {
-        return studentRepository.insertStudent(new Student(null, firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearOfStudy));
+    public int insertStudent(int catalogueId, String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Constants.Gender gender, String phoneString, int yearOfStudy) {
+        return studentRepository.insertStudent(new Student(catalogueId, firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearOfStudy));
     }
 
-    //
-//    public Student getStudentById(int studentId) {
-//        return studentRepository.getStudentById(studentId);
-//    }
-
-
-//    public int removeStudent(Student student) {
-//        if (studentRepository.removeStudent(student) == -1) {
-//            return -1;
-//        }
-//        return catalogueRepository.removeStudent(student);
-//    }
-
-//    public boolean teacherIsActive(Teacher teacher) {
-//        return catalogueRepository.teacherExists(teacher);
-//    }
-
-//    public boolean studentExists(Student student) {
-//        return studentRepository.studentExists(student);
-//    }
-
-    // TO DO
-    public void removeTeacher(int teacherId) {
-//        if (this.teacherIsActive(teacher)) {
-//            throw new IllegalArgumentException("Teacher is active in a catalogue");
-//        }
-        teacherRepository.removeTeacher(teacherId);
-//        catalogueRepository.removeTeacher(teacher);
+    public Student getStudentById(int studentId) {
+        return studentRepository.getStudentById(studentId);
     }
 
-    public int assignTeacherAsSupervisorToCatalogue(int teacherId, int catalogueId) {
-        Catalogue catalogue = catalogueRepository.getCatalogueById(catalogueId);
-        if (catalogue == null) {
-            return -1; // catalogue not found
+    public boolean removeStudent(int studentId) {
+        try {
+            Student student = studentRepository.getStudentById(studentId);
+            if (student == null) {
+                return false;
+            }
+            return studentRepository.removeStudent(student);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catalogue.setClassSupervisorId(teacherId);
+        return false;
+    }
+
+    public boolean removeStudent(Student student) {
+        return studentRepository.removeStudent(student);
+    }
+
+    public boolean studentExists(Student student) {
+        return studentRepository.studentExists(student);
+    }
+
+    public boolean studentExists(int studentId) {
+        return studentRepository.studentExists(studentId);
+    }
+
+    public ArrayList<Student> getAllStudents() {
+        return studentRepository.getAllStudents();
+    }
+
+    public boolean teacherIsActive(Teacher teacher) {
+        return teacherRepository.teacherIsActive(teacher);
+    }
+
+    public boolean teacherIsActive(int teacherId) {
+        Teacher teacher = teacherRepository.getTeacherById(teacherId);
+        if (teacher == null) {
+            return false;
+        }
+        return teacherRepository.teacherIsActive(teacher);
+    }
+
+    public int removeTeacher(int teacherId) {
+        if (this.teacherIsActive(teacherId)) {
+            return -1; // teacher is active, cannot be removed
+        }
+        teacherRepository.removeTeacher(teacherId);
         return teacherId;
     }
 
-//    public int assignStudentToCatalogue(Student student, int catalogueId) {
-//        Catalogue catalogue = catalogueRepository.getCatalogueById(catalogueId);
-//        if (catalogue == null) {
-//            return -2; // catalogue not found
-//        }
-//        return catalogue.insertStudent(student); // returns studentId or -1 if student already exists
-//    }
-
-//    public int assignStudentToCatalogue(int studentId, int catalogueId) {
-//        Student student = studentRepository.getStudentById(studentId);
-//        if (student == null) {
-//            return -3; // student not found
-//        }
-//        return this.assignStudentToCatalogue(student, catalogueId);
-//    }
 
 }
