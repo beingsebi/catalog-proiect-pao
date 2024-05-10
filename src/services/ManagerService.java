@@ -206,10 +206,6 @@ public class ManagerService {
         return catalogueRepository.insertCatalogue(catalogue);
     }
 
-    public int insertStudent(Student student) {
-        return studentRepository.insertStudent(student);
-    }
-
     public int insertCatalogue(String catalogueName, String catalogueDescription, int classYear, String classSymbol, int classSupervisorId) {
         return catalogueRepository.insertCatalogue(new Catalogue(catalogueName, catalogueDescription, classYear, classSymbol, classSupervisorId));
     }
@@ -285,6 +281,10 @@ public class ManagerService {
         }
 
         return catalogue.getCourseInstanceRepository().insertCourseInstance(new CourseInstance(catalogue.getCourseInstanceRepository().getCourseInstanceRepositoryId(), course, teachersIds, startTime, day, duration));
+    }
+
+    public int insertStudent(Student student) {
+        return studentRepository.insertStudent(student);
     }
 
     public int insertStudent(int catalogueId, String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Constants.Gender gender, String phoneString, int yearOfStudy) {
@@ -403,6 +403,5 @@ public class ManagerService {
         r.setYearOfStudy(yearOfStudy);
         studentRepository.updateStudent(studentId, r);
     }
-
 
 }
