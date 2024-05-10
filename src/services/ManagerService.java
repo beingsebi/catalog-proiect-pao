@@ -303,6 +303,10 @@ public class ManagerService {
         CourseInstanceRepository.removeCourseInstance(c);
     }
 
+    public void updateCourseInstance(int courseInstanceId, CourseInstance courseInstance) {
+        CourseInstanceRepository.updateCourseInstance(courseInstanceId, courseInstance);
+    }
+
     public ArrayList<CourseInstance> getAllCourseInstances() {
         return CourseInstanceRepository.getAllCourseInstances();
     }

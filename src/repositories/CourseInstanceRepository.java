@@ -71,6 +71,26 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
         return courseInstanceRepositoryId;
     }
 
+    public static void updateCourseInstance(int courseInstanceId, CourseInstance courseInstance) {
+        CSVService.WriteAction("updateCourseInstance");
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "UPDATE courseInstances SET courseId = ?, teacherIds = ?, startTime = ?, day = ?, duration = ? WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, courseInstance.getCourse().getCourseId());
+            stmt.setArray(2, con.createArrayOf("integer", courseInstance.getTeachersIds().toArray()));
+            stmt.setObject(3, courseInstance.getStartTime());
+            stmt.setObject(4, courseInstance.getDay().toString(), java.sql.Types.OTHER);
+            stmt.setInt(5, courseInstance.getDuration());
+            stmt.setInt(6, courseInstanceId);
+            stmt.executeUpdate();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public CourseInstanceRepository() {
         this.courseInstanceRepositoryId = createCourseInstanceRepo();
     }

@@ -9,9 +9,9 @@ import java.util.Collection;
 public class CourseInstance {
 
     private final Integer courseInstanceId;
-    private int repoId;
+    private final int repoId;
     private Course course;
-    private ArrayList<Integer> teachers;
+    private final ArrayList<Integer> teachers;
     private LocalTime startTime;
     private Days day;
     private int duration;
@@ -26,6 +26,10 @@ public class CourseInstance {
         this.startTime = startTime;
         this.day = day;
         this.duration = duration;
+    }
+
+    public ArrayList<Integer> getTeachers() {
+        return teachers;
     }
 
     public CourseInstance(int repoId, Course course, Collection<Integer> teachers, LocalTime startTime, Days day, int duration) {

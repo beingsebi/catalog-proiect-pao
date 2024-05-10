@@ -23,4 +23,7 @@ public interface CourseInstanceRepositoryI {
     void reset();
 
     int getCourseInstanceRepositoryId();
+
+    static void updateCourseInstance(int courseInstanceId, CourseInstance courseInstance) {
+    }
 }

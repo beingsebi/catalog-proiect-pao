@@ -192,31 +192,31 @@ public class MenuService {
                 break;
             }
             case 11: {
-                for (Course i : managerService.getAllCourses()){
+                for (Course i : managerService.getAllCourses()) {
                     System.out.println(i);
                 }
                 break;
             }
             case 12: {
-                for (Teacher i : managerService.getAllTeachers()){
+                for (Teacher i : managerService.getAllTeachers()) {
                     System.out.println(i);
                 }
                 break;
             }
             case 13: {
-                for (Catalogue i : managerService.getAllCatalogues()){
+                for (Catalogue i : managerService.getAllCatalogues()) {
                     System.out.println(i);
                 }
                 break;
             }
             case 14: {
-                for (CourseInstance i : managerService.getAllCourseInstances()){
+                for (CourseInstance i : managerService.getAllCourseInstances()) {
                     System.out.println(i);
                 }
                 break;
             }
             case 15: {
-                for (models.Student i : managerService.getAllStudents()){
+                for (models.Student i : managerService.getAllStudents()) {
                     System.out.println(i);
                 }
                 break;
@@ -251,6 +251,315 @@ public class MenuService {
                 System.out.println(managerService.getStudentById(studentId));
                 break;
             }
+            case 21: {
+                System.out.println("Enter course id:");
+                int courseId = Integer.parseInt(scanner.nextLine());
+                Course course = managerService.getCourseById(courseId);
+                if (course == null) {
+                    System.out.println("Course not found");
+                    break;
+                }
+                System.out.println("1. Update name");
+                System.out.println("2. Update description");
+                int updateOption = Integer.parseInt(scanner.nextLine());
+                if (updateOption == 1) {
+                    System.out.println("Enter new name:");
+                    String newName = scanner.nextLine();
+                    course.setCourseName(newName);
+                } else if (updateOption == 2) {
+                    System.out.println("Enter new description:");
+                    String newDescription = scanner.nextLine();
+                    course.setCourseDescription(newDescription);
+                } else {
+                    System.out.println("Invalid option");
+                    break;
+                }
+                managerService.updateCourse(courseId, course);
+                break;
+            }
+            case 22: {
+                System.out.println("Enter teacher id:");
+                int teacherId = Integer.parseInt(scanner.nextLine());
+                Teacher teacher = managerService.getTeacherById(teacherId);
+                if (teacher == null) {
+                    System.out.println("Teacher not found");
+                    break;
+                }
+                System.out.println("1. Update first name");
+                System.out.println("2. Update last name");
+                System.out.println("3. Update date of birth (example: 1992-03-20)");
+                System.out.println("4. Update address");
+                System.out.println("5. Update email");
+                System.out.println("6. Update gender \"FEMALE\" or \"MALE\")");
+                System.out.println("7. Update phone number");
+                System.out.println("8. Update years of experience");
+                System.out.println("9. Update department");
+                System.out.println("10. Update specialization");
+                int updateOption = Integer.parseInt(scanner.nextLine());
+                switch (updateOption) {
+                    case 1: {
+                        System.out.println("Enter new first name:");
+                        String newFirstName = scanner.nextLine();
+                        teacher.setFirstName(newFirstName);
+                        break;
+                    }
+                    case 2: {
+                        System.out.println("Enter new last name:");
+                        String newLastName = scanner.nextLine();
+                        teacher.setLastName(newLastName);
+                        break;
+                    }
+                    case 3: {
+                        System.out.println("Enter new date of birth (example: 1992-03-20):");
+                        LocalDate newDateOfBirth = LocalDate.parse(scanner.nextLine());
+                        teacher.setDateOfBirth(newDateOfBirth);
+                        break;
+                    }
+                    case 4: {
+                        System.out.println("Enter new address:");
+                        String newAddress = scanner.nextLine();
+                        teacher.setAddress(newAddress);
+                        break;
+                    }
+                    case 5: {
+                        System.out.println("Enter new email:");
+                        String newEmail = scanner.nextLine();
+                        teacher.setEmail(newEmail);
+                        break;
+                    }
+                    case 6: {
+                        System.out.println("Enter new gender:");
+                        Constants.Gender gender = Constants.Gender.valueOf(scanner.nextLine());
+                        teacher.setGender(gender);
+                        break;
+                    }
+                    case 7: {
+                        System.out.println("Enter new phone number:");
+                        String newPhone = scanner.nextLine();
+                        teacher.setPhoneString(newPhone);
+                        break;
+                    }
+                    case 8: {
+                        System.out.println("Enter new years of experience:");
+                        int newYearsOfExperience = Integer.parseInt(scanner.nextLine());
+                        teacher.setYearsOfExperience(newYearsOfExperience);
+                        break;
+                    }
+                    case 9: {
+                        System.out.println("Enter new department:");
+                        String newDepartment = scanner.nextLine();
+                        teacher.setDepartment(newDepartment);
+                        break;
+                    }
+                    case 10: {
+                        System.out.println("Enter new specialization:");
+                        String newSpecialization = scanner.nextLine();
+                        teacher.setSpecialization(newSpecialization);
+                        break;
+                    }
+                    default: {
+                        System.out.println("Invalid option");
+                        return;
+                    }
+                }
+                managerService.updateTeacher(teacherId, teacher);
+                break;
+            }
+            case 23: {
+                System.out.println("Enter catalogue id:");
+                int catalogueId = Integer.parseInt(scanner.nextLine());
+                Catalogue catalogue = managerService.getCatalogueById(catalogueId);
+                if (catalogue == null) {
+                    System.out.println("Catalogue not found");
+                    break;
+                }
+                System.out.println("1. Update name");
+                System.out.println("2. Update description");
+                System.out.println("3. Update class year");
+                System.out.println("4. Update class symbol");
+                System.out.println("5. Update class supervisor id");
+                int updateOption = Integer.parseInt(scanner.nextLine());
+                switch (updateOption) {
+                    case 1: {
+                        System.out.println("Enter new name:");
+                        String newName = scanner.nextLine();
+                        catalogue.setCatalogueName(newName);
+                        break;
+                    }
+                    case 2: {
+                        System.out.println("Enter new description:");
+                        String newDescription = scanner.nextLine();
+                        catalogue.setCatalogueDescription(newDescription);
+                        break;
+                    }
+                    case 3: {
+                        System.out.println("Enter new class year:");
+                        int newClassYear = Integer.parseInt(scanner.nextLine());
+                        catalogue.setClassYear(newClassYear);
+                        break;
+                    }
+                    case 4: {
+                        System.out.println("Enter new class symbol:");
+                        String newClassSymbol = scanner.nextLine();
+                        catalogue.setClassSymbol(newClassSymbol);
+                        break;
+                    }
+                    case 5: {
+                        System.out.println("Enter new class supervisor id:");
+                        int newClassSupervisorId = Integer.parseInt(scanner.nextLine());
+                        catalogue.setClassSupervisorId(newClassSupervisorId);
+                        break;
+                    }
+                    default: {
+                        System.out.println("Invalid option");
+                        return;
+                    }
+                }
+                managerService.updateCatalogue(catalogueId, catalogue);
+                break;
+            }
+            case 24: {
+                System.out.println("Enter course instance id:");
+                int courseInstanceId = Integer.parseInt(scanner.nextLine());
+                CourseInstance courseInstance = managerService.getCourseInstanceById(courseInstanceId);
+                if (courseInstance == null) {
+                    System.out.println("Course instance not found");
+                    break;
+                }
+                System.out.println("1. Update course id");
+                System.out.println("2. Update teacher ids");
+                System.out.println("3. Update start time");
+                System.out.println("4. Update day");
+                System.out.println("5. Update duration");
+                int updateOption = Integer.parseInt(scanner.nextLine());
+                switch (updateOption) {
+                    case 1: {
+                        System.out.println("Enter new course id:");
+                        int newCourseId = Integer.parseInt(scanner.nextLine());
+                        Course c = managerService.getCourseById(newCourseId);
+                        if (c == null) {
+                            System.out.println("Course not found");
+                            break;
+                        }
+                        courseInstance.setCourse(c);
+                        break;
+                    }
+                    case 2: {
+                        System.out.println("Enter new teacher ids (separated by comma):");
+                        ArrayList<Integer> newTeacherIds = new ArrayList<>();
+                        String[] teacherIdsString = scanner.nextLine().split(",");
+                        for (String teacherId : teacherIdsString) {
+                            newTeacherIds.add(Integer.parseInt(teacherId));
+                        }
+                        courseInstance.setTeachers(newTeacherIds);
+                        break;
+                    }
+                    case 3: {
+                        System.out.println("Enter new start time (example: 12:00):");
+                        String newStartTimeString = scanner.nextLine();
+                        LocalTime newStartTime = LocalTime.parse(newStartTimeString);
+                        courseInstance.setStartTime(newStartTime);
+                        break;
+                    }
+                    case 4: {
+                        System.out.println("Enter new day:");
+                        Constants.Days newDay = Constants.Days.valueOf(scanner.nextLine());
+                        courseInstance.setDay(newDay);
+                        break;
+                    }
+                    case 5: {
+                        System.out.println("Enter new duration:");
+                        int newDuration = Integer.parseInt(scanner.nextLine());
+                        courseInstance.setDuration(newDuration);
+                        break;
+                    }
+                    default: {
+                        System.out.println("Invalid option");
+                        return;
+                    }
+                }
+                managerService.updateCourseInstance(courseInstanceId, courseInstance);
+                break;
+            }
+            case 25: {
+                System.out.println("Enter student id:");
+                int studentId = Integer.parseInt(scanner.nextLine());
+                models.Student student = managerService.getStudentById(studentId);
+                if (student == null) {
+                    System.out.println("Student not found");
+                    break;
+                }
+                System.out.println("1. Update first name");
+                System.out.println("2. Update last name");
+                System.out.println("3. Update date of birth (example: 1992-03-20)");
+                System.out.println("4. Update address");
+                System.out.println("5. Update email");
+                System.out.println("6. Update gender (\"FEMALE\" or \"MALE\")");
+                System.out.println("7. Update phone number");
+                System.out.println("8. Update year of study");
+                int updateOption = Integer.parseInt(scanner.nextLine());
+                switch (updateOption) {
+                    case 1: {
+                        System.out.println("Enter new first name:");
+                        String newFirstName = scanner.nextLine();
+                        student.setFirstName(newFirstName);
+                        break;
+                    }
+                    case 2: {
+                        System.out.println("Enter new last name:");
+                        String newLastName = scanner.nextLine();
+                        student.setLastName(newLastName);
+                        break;
+                    }
+                    case 3: {
+                        System.out.println("Enter new date of birth (example: 1992-03-20):");
+                        LocalDate newDateOfBirth = LocalDate.parse(scanner.nextLine());
+                        student.setDateOfBirth(newDateOfBirth);
+                        break;
+                    }
+                    case 4: {
+                        System.out.println("Enter new address:");
+                        String newAddress = scanner.nextLine();
+                        student.setAddress(newAddress);
+                        break;
+                    }
+                    case 5: {
+                        System.out.println("Enter new email:");
+                        String newEmail = scanner.nextLine();
+                        student.setEmail(newEmail);
+                        break;
+                    }
+                    case 6: {
+                        System.out.println("Enter new gender:");
+                        Constants.Gender gender = Constants.Gender.valueOf(scanner.nextLine());
+                        student.setGender(gender);
+                        break;
+                    }
+                    case 7: {
+                        System.out.println("Enter new phone number:");
+                        String newPhone = scanner.nextLine();
+                        student.setPhoneString(newPhone);
+                        break;
+                    }
+                    case 8: {
+                        System.out.println("Enter new year of study:");
+                        int newYearOfStudy = Integer.parseInt(scanner.nextLine());
+                        student.setYearOfStudy(newYearOfStudy);
+                        break;
+                    }
+                    default: {
+                        System.out.println("Invalid option");
+                        return;
+                    }
+                }
+                managerService.updateStudent(studentId, student);
+                break;
+            }
+            default: {
+                System.out.println("Invalid option");
+                break;
+            }
         }
     }
 }
+

@@ -26,7 +26,7 @@ public class Person {
     }
 
     public Person(int personId, String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Gender gender, String phoneString) {
-        this(firstName, lastName, dateOfBirth, address, email, gender,phoneString);
+        this(firstName, lastName, dateOfBirth, address, email, gender, phoneString);
         this.personId = personId;
     }
 
@@ -104,6 +104,7 @@ public class Person {
     @Override
     public String toString() {
         return "Person{" +
+                (personId != null ? "personId=" + personId + ", " : "") +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
