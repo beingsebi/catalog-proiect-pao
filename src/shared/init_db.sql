@@ -41,11 +41,11 @@ CREATE TABLE CourseInstanceRepositories
 CREATE TABLE CourseInstances
 (
     id         SERIAL PRIMARY KEY,
-    repoId 	   INT REFERENCES CourseInstanceRepositories (id),
+	repoId 	   INT REFERENCES CourseInstanceRepositories (id),
     courseId   INT REFERENCES Courses (id),
     teacherIds INT[],
     startTime  TIME,
-    day 	   Days,
+	day 	   Days,
     duration   INT
 );
 
@@ -63,7 +63,7 @@ CREATE TABLE Catalogues
 CREATE TABLE Students
 (
     id          SERIAL PRIMARY KEY,
-    catalogueId INT REFERENCES Catalogues (id),
+	catalogueId INT REFERENCES Catalogues (id),
     firstName   VARCHAR(255),
     lastName    VARCHAR(255),
     dateOfBirth DATE,
