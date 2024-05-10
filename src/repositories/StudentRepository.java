@@ -108,6 +108,31 @@ public class StudentRepository implements StudentRepositoryI {
     }
 
     @Override
+    public void updateStudent(int studentId, Student student) {
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "UPDATE students SET catalogueId = ?, firstName = ?, lastName = ?, dateOfBirth = ?, address = ?, email = ?, gender = ?, phoneString = ?, yearOfStudy = ? WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, student.getCatalogueId());
+            stmt.setString(2, student.getFirstName());
+            stmt.setString(3, student.getLastName());
+            stmt.setDate(4, java.sql.Date.valueOf(student.getDateOfBirth()));
+            stmt.setString(5, student.getAddress());
+            stmt.setString(6, student.getEmail());
+            stmt.setObject(7, student.getGender().toString(), java.sql.Types.OTHER);
+            stmt.setString(8, student.getPhoneString());
+            stmt.setInt(9, student.getYearOfStudy());
+            stmt.setInt(10, studentId);
+            stmt.executeUpdate();
+            con.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public boolean removeStudent(Student student) {
         try {
             Connection con = DbUtils.getConnection();

@@ -1,7 +1,6 @@
 package repositories;
 
 import models.Catalogue;
-import models.Teacher;
 import shared.DbUtils;
 
 import java.sql.Connection;
@@ -93,11 +92,24 @@ public class CatalogueRepository implements CatalogueRepositoryI {
     }
 
     @Override
-    public void removeCoursesOfTeacher(Teacher teacher) {
-//        for (Catalogue catalogue : catalogues) {
-//            catalogue.removeCoursesOfTeacher(teacher);
-//        }
+    public void updateCatalogue(int catalogueId, Catalogue catalogue) {
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "UPDATE catalogues SET name = ?, description = ?, class_year = ?, class_symbol = ?, supervisorId = ?, courseinstancerepoid = ?  WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, catalogue.getCatalogueName());
+            stmt.setString(2, catalogue.getCatalogueDescription());
+            stmt.setInt(3, catalogue.getClassYear());
+            stmt.setString(4, catalogue.getClassSymbol());
+            stmt.setInt(5, catalogue.getClassSupervisorId());
+            stmt.setInt(6, catalogue.getCourseInstanceRepository().getCourseInstanceRepositoryId());
+            stmt.setInt(7, catalogueId);
+            stmt.executeUpdate();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
 
 }

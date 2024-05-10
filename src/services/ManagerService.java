@@ -48,62 +48,108 @@ public class ManagerService {
 
     public void updateTeacherFirstName(int teacherId, String firstName) {
         Teacher r = teacherRepository.getTeacherById(teacherId);
+        if (r == null) {
+            return;
+        }
         r.setFirstName(firstName);
         teacherRepository.updateTeacher(teacherId, r);
     }
 
     public void updateTeacherLastName(int teacherId, String lastName) {
         Teacher r = teacherRepository.getTeacherById(teacherId);
+        if (r == null) {
+            return;
+        }
         r.setLastName(lastName);
         teacherRepository.updateTeacher(teacherId, r);
     }
 
     public void updateTeacherDateOfBirth(int teacherId, LocalDate dateOfBirth) {
         Teacher r = teacherRepository.getTeacherById(teacherId);
+        if (r == null) {
+            return;
+        }
         r.setDateOfBirth(dateOfBirth);
         teacherRepository.updateTeacher(teacherId, r);
     }
 
     public void updateTeacherAddress(int teacherId, String address) {
         Teacher r = teacherRepository.getTeacherById(teacherId);
+        if (r == null) {
+            return;
+        }
         r.setAddress(address);
         teacherRepository.updateTeacher(teacherId, r);
     }
 
     public void updateTeacherEmail(int teacherId, String email) {
         Teacher r = teacherRepository.getTeacherById(teacherId);
+        if (r == null) {
+            return;
+        }
         r.setEmail(email);
         teacherRepository.updateTeacher(teacherId, r);
     }
 
     public void updateTeacherGender(int teacherId, Constants.Gender gender) {
         Teacher r = teacherRepository.getTeacherById(teacherId);
+        if (r == null) {
+            return;
+        }
         r.setGender(gender);
         teacherRepository.updateTeacher(teacherId, r);
     }
 
     public void updateTeacherPhoneString(int teacherId, String phoneString) {
         Teacher r = teacherRepository.getTeacherById(teacherId);
+        if (r == null) {
+            return;
+        }
         r.setPhoneString(phoneString);
         teacherRepository.updateTeacher(teacherId, r);
     }
 
     public void updateTeacherYearsOfExperience(int teacherId, int yearsOfExperience) {
         Teacher r = teacherRepository.getTeacherById(teacherId);
+        if (r == null) {
+            return;
+        }
         r.setYearsOfExperience(yearsOfExperience);
         teacherRepository.updateTeacher(teacherId, r);
     }
 
     public void updateTeacherDepartment(int teacherId, String department) {
         Teacher r = teacherRepository.getTeacherById(teacherId);
+        if (r == null) {
+            return;
+        }
         r.setDepartment(department);
         teacherRepository.updateTeacher(teacherId, r);
     }
 
     public void updateTeacherSpecialization(int teacherId, String specialization) {
         Teacher r = teacherRepository.getTeacherById(teacherId);
+        if (r == null) {
+            return;
+        }
         r.setSpecialization(specialization);
         teacherRepository.updateTeacher(teacherId, r);
+    }
+
+    public boolean teacherIsActive(int teacherId) {
+        Teacher teacher = teacherRepository.getTeacherById(teacherId);
+        if (teacher == null) {
+            return false;
+        }
+        return teacherRepository.teacherIsActive(teacher);
+    }
+
+    public int removeTeacher(int teacherId) {
+        if (this.teacherIsActive(teacherId)) {
+            return -1; // teacher is active, cannot be removed
+        }
+        teacherRepository.removeTeacher(teacherId);
+        return teacherId;
     }
 
     public int insertCourse(Course course) {
@@ -128,12 +174,18 @@ public class ManagerService {
 
     public void updateCourseName(int courseId, String courseName) {
         Course r = CourseRepository.getCourseById(courseId);
+        if (r == null) {
+            return;
+        }
         r.setCourseName(courseName);
         courseRepository.updateCourse(courseId, r);
     }
 
     public void updateCourseDescription(int courseId, String courseDescription) {
         Course r = CourseRepository.getCourseById(courseId);
+        if (r == null) {
+            return;
+        }
         r.setCourseDescription(courseDescription);
         courseRepository.updateCourse(courseId, r);
     }
@@ -162,6 +214,58 @@ public class ManagerService {
         catalogueRepository.removeCatalogue(catalogueId);
     }
 
+    public void updateCatalogue(int catalogueId, Catalogue catalogue) {
+        catalogueRepository.updateCatalogue(catalogueId, catalogue);
+    }
+
+    public void updateCatalogueName(int catalogueId, String catalogueName) {
+        Catalogue r = catalogueRepository.getCatalogueById(catalogueId);
+        if (r == null) {
+            return;
+        }
+        r.setCatalogueName(catalogueName);
+        catalogueRepository.updateCatalogue(catalogueId, r);
+    }
+
+    public void updateCatalogueDescription(int catalogueId, String catalogueDescription) {
+        Catalogue r = catalogueRepository.getCatalogueById(catalogueId);
+        if (r == null) {
+            return;
+        }
+        r.setCatalogueDescription(catalogueDescription);
+        catalogueRepository.updateCatalogue(catalogueId, r);
+    }
+
+    public void updateClassYear(int catalogueId, int classYear) {
+        Catalogue r = catalogueRepository.getCatalogueById(catalogueId);
+        if (r == null) {
+            return;
+        }
+        r.setClassYear(classYear);
+        catalogueRepository.updateCatalogue(catalogueId, r);
+    }
+
+    public void updateClassSymbol(int catalogueId, String classSymbol) {
+        Catalogue r = catalogueRepository.getCatalogueById(catalogueId);
+        if (r == null) {
+            return;
+        }
+        r.setClassSymbol(classSymbol);
+        catalogueRepository.updateCatalogue(catalogueId, r);
+    }
+
+    public void updateClassSupervisorId(int catalogueId, int classSupervisorId) {
+        if (!teacherRepository.teacherExists(classSupervisorId)) {
+            return;
+        }
+        Catalogue r = catalogueRepository.getCatalogueById(catalogueId);
+        if (r == null) {
+            return;
+        }
+        r.setClassSupervisorId(classSupervisorId);
+        catalogueRepository.updateCatalogue(catalogueId, r);
+    }
+
     public int insertCourseInstance(int catalogueId, int courseId, Collection<Integer> teachersIds, LocalTime startTime, Constants.Days day, int duration) {
         Catalogue catalogue = catalogueRepository.getCatalogueById(catalogueId);
         if (catalogue == null) {
@@ -184,16 +288,11 @@ public class ManagerService {
     }
 
     public boolean removeStudent(int studentId) {
-        try {
-            Student student = studentRepository.getStudentById(studentId);
-            if (student == null) {
-                return false;
-            }
-            return studentRepository.removeStudent(student);
-        } catch (Exception e) {
-            e.printStackTrace();
+        Student student = studentRepository.getStudentById(studentId);
+        if (student == null) {
+            return false;
         }
-        return false;
+        return studentRepository.removeStudent(student);
     }
 
     public boolean removeStudent(Student student) {
@@ -212,24 +311,89 @@ public class ManagerService {
         return studentRepository.getAllStudents();
     }
 
-    public boolean teacherIsActive(Teacher teacher) {
-        return teacherRepository.teacherIsActive(teacher);
+    public void updateStudent(int studentId, Student student) {
+        studentRepository.updateStudent(studentId, student);
     }
 
-    public boolean teacherIsActive(int teacherId) {
-        Teacher teacher = teacherRepository.getTeacherById(teacherId);
-        if (teacher == null) {
-            return false;
+    public void updateStudentCatalogueId(int studentId, int catalogueId) {
+        Student r = studentRepository.getStudentById(studentId);
+        if (r == null) {
+            return;
         }
-        return teacherRepository.teacherIsActive(teacher);
+        r.setCatalogueId(catalogueId);
+        studentRepository.updateStudent(studentId, r);
     }
 
-    public int removeTeacher(int teacherId) {
-        if (this.teacherIsActive(teacherId)) {
-            return -1; // teacher is active, cannot be removed
+    public void updateStudentFirstName(int studentId, String firstName) {
+        Student r = studentRepository.getStudentById(studentId);
+        if (r == null) {
+            return;
         }
-        teacherRepository.removeTeacher(teacherId);
-        return teacherId;
+        r.setFirstName(firstName);
+        studentRepository.updateStudent(studentId, r);
+    }
+
+    public void updateStudentLastName(int studentId, String lastName) {
+        Student r = studentRepository.getStudentById(studentId);
+        if (r == null) {
+            return;
+        }
+        r.setLastName(lastName);
+        studentRepository.updateStudent(studentId, r);
+    }
+
+    public void updateStudentDateOfBirth(int studentId, LocalDate dateOfBirth) {
+        Student r = studentRepository.getStudentById(studentId);
+        if (r == null) {
+            return;
+        }
+        r.setDateOfBirth(dateOfBirth);
+        studentRepository.updateStudent(studentId, r);
+    }
+
+    public void updateStudentAddress(int studentId, String address) {
+        Student r = studentRepository.getStudentById(studentId);
+        if (r == null) {
+            return;
+        }
+        r.setAddress(address);
+        studentRepository.updateStudent(studentId, r);
+    }
+
+    public void updateStudentEmail(int studentId, String email) {
+        Student r = studentRepository.getStudentById(studentId);
+        if (r == null) {
+            return;
+        }
+        r.setEmail(email);
+        studentRepository.updateStudent(studentId, r);
+    }
+
+    public void updateStudentGender(int studentId, Constants.Gender g) {
+        Student r = studentRepository.getStudentById(studentId);
+        if (r == null) {
+            return;
+        }
+        r.setGender(g);
+        studentRepository.updateStudent(studentId, r);
+    }
+
+    public void updateStudentPhoneString(int studentId, String phoneString) {
+        Student r = studentRepository.getStudentById(studentId);
+        if (r == null) {
+            return;
+        }
+        r.setPhoneString(phoneString);
+        studentRepository.updateStudent(studentId, r);
+    }
+
+    public void updateStudentYearOfStudy(int studentId, int yearOfStudy) {
+        Student r = studentRepository.getStudentById(studentId);
+        if (r == null) {
+            return;
+        }
+        r.setYearOfStudy(yearOfStudy);
+        studentRepository.updateStudent(studentId, r);
     }
 
 

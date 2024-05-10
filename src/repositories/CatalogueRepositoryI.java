@@ -1,8 +1,6 @@
 package repositories;
 
 import models.Catalogue;
-import models.Student;
-import models.Teacher;
 
 public interface CatalogueRepositoryI {
     int insertCatalogue(Catalogue catalogue);
@@ -12,5 +10,7 @@ public interface CatalogueRepositoryI {
     void removeCatalogue(int catalogueId);
 
     boolean catalogueExists(int catalogueId);
+
+    void updateCatalogue(int catalogueId, Catalogue catalogue);
 
 }

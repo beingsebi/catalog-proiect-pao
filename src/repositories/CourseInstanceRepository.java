@@ -160,6 +160,19 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
 
     @Override
     public void reset() {
-//        courseInstances.clear();
+        if (this.courseInstanceRepositoryId == null) {
+            return;
+        }
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "DELETE FROM courseInstances WHERE repoId = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, this.courseInstanceRepositoryId);
+            stmt.executeUpdate();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

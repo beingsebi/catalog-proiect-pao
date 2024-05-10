@@ -17,4 +17,6 @@ public interface StudentRepositoryI {
 
     ArrayList<Student> getAllStudents();
 
+    void updateStudent(int studentId, Student student);
+
 }

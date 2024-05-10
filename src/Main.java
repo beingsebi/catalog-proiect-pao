@@ -1,21 +1,18 @@
-import models.Teacher;
+import models.Catalogue;
+import models.Student;
 import services.ManagerService;
 import shared.Constants;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 public class Main {
     public static void main(String[] args) {
 
         ManagerService managerService = new ManagerService();
-        int tch = managerService.insertTeacher("John23", "Doe", LocalDate.now(), "123 Street", "john.doe@example", Constants.Gender.FEMALE, "123", 3, "Computer Science", "Java");
-managerService.removeTeacher(12);
+        Catalogue c =managerService.getCatalogueById(1);
+        c.setCatalogueName("111111111111111");
+        managerService.updateCatalogue(1,c);
 //        int crs = managerService.insertCourse("Python Programming", "A course about Python programming");
 //        int crsinst = managerService.insertCourseInstance(1, crs, new ArrayList<>(List.of(tch)), LocalTime.now(), Constants.Days.FRIDAY,2);
 //        Teacher t=managerService.getTeacherById(tch);

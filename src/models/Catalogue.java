@@ -1,7 +1,6 @@
 package models;
 
 import repositories.CourseInstanceRepository;
-import repositories.CourseInstanceRepositoryI;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -110,7 +109,7 @@ public class Catalogue {
                 '}';
     }
 
-    public CourseInstanceRepositoryI getCourseInstanceRepository() {
+    public CourseInstanceRepository getCourseInstanceRepository() {
         return courseInstanceRepository;
     }
 }

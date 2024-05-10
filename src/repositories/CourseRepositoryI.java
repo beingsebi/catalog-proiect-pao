@@ -8,7 +8,6 @@ public interface CourseRepositoryI {
     static Course getCourseById(int courseId) {
         return null;
     }
-
     void removeCourse(int courseId);
 
     boolean courseExists(int courseId);
