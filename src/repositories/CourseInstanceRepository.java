@@ -34,6 +34,34 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
 
     public Integer courseInstanceRepositoryId;
 
+    public static ArrayList<CourseInstance> getAllCourseInstances() {
+        CSVService.WriteAction("getAllCourseInstances");
+        ArrayList<CourseInstance> courseInstances = new ArrayList<>();
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "SELECT * FROM courseInstances";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int courseId = rs.getInt("courseId");
+                Course course = CourseRepository.getCourseById(courseId);
+                if (course == null) {
+                    return null;
+                }
+                int repoId = rs.getInt("repoId");
+                ArrayList<Integer> teacherIds = new ArrayList<>();
+                Collections.addAll(teacherIds, (Integer[]) rs.getArray("teacherIds").getArray());
+                Constants.Days day = Constants.Days.valueOf(rs.getString("day"));
+                courseInstances.add(new CourseInstance(rs.getInt("id"), repoId, course, teacherIds, rs.getTime("startTime").toLocalTime(), day, rs.getInt("duration")));
+            }
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return courseInstances;
+    }
+
     @Override
     public int getCourseInstanceRepositoryId() {
         CSVService.WriteAction("getCourseInstanceRepositoryId");
@@ -80,8 +108,8 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
         return -1;
     }
 
-    @Override
-    public CourseInstance getCourseInstanceById(int courseInstanceId) {
+
+    public static CourseInstance getCourseInstanceById(int courseInstanceId) {
         CSVService.WriteAction("getCourseInstanceById");
         try {
             Connection con = DbUtils.getConnection();
@@ -109,8 +137,7 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
         return null;
     }
 
-    @Override
-    public boolean removeCourseInstance(CourseInstance courseInstance) {
+    public static void removeCourseInstance(CourseInstance courseInstance) {
         CSVService.WriteAction("removeCourseInstance");
         try {
             Connection con = DbUtils.getConnection();
@@ -120,11 +147,9 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
             stmt.setInt(1, courseInstance.getCourseInstanceId());
             stmt.executeUpdate();
             con.close();
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
     }
 
     @Override

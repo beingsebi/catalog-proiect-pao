@@ -6,6 +6,7 @@ import shared.DbUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 
 public class CatalogueRepository implements CatalogueRepositoryI {
 
@@ -116,6 +117,29 @@ public class CatalogueRepository implements CatalogueRepositoryI {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public ArrayList<Catalogue> getAllCatalogues() {
+        CSVService.WriteAction("getAllCatalogues");
+        try {
+            Connection con = DbUtils.getConnection();
+            assert con != null;
+            String sql = "SELECT * FROM catalogues";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            var rs = stmt.executeQuery();
+            ArrayList<Catalogue> catalogues = new ArrayList<>();
+            while (rs.next()) {
+                Catalogue catalogue = new Catalogue(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("class_year"),
+                        rs.getString("class_symbol"), rs.getInt("supervisorId"), rs.getInt("courseInstanceRepoId"));
+                catalogues.add(catalogue);
+            }
+            con.close();
+            return catalogues;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

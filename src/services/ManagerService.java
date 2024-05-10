@@ -34,8 +34,8 @@ public class ManagerService {
         return teacherRepository.insertTeacher(teacher);
     }
 
-    public int insertTeacher(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Constants.Gender gender, String phoneString, int yearsOfExperience, String department, String specialization) {
-        return teacherRepository.insertTeacher(new Teacher(firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearsOfExperience, department, specialization));
+    public void insertTeacher(String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Constants.Gender gender, String phoneString, int yearsOfExperience, String department, String specialization) {
+        teacherRepository.insertTeacher(new Teacher(firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearsOfExperience, department, specialization));
     }
 
     public Teacher getTeacherById(int teacherId) {
@@ -152,20 +152,19 @@ public class ManagerService {
         return teacherRepository.teacherIsActive(teacher);
     }
 
-    public int removeTeacher(int teacherId) {
+    public void removeTeacher(int teacherId) {
         if (this.teacherIsActive(teacherId)) {
-            return -1; // teacher is active, cannot be removed
+            return; // teacher is active, cannot be removed
         }
         teacherRepository.removeTeacher(teacherId);
-        return teacherId;
     }
 
     public int insertCourse(Course course) {
         return courseRepository.insertCourse(course);
     }
 
-    public int insertCourse(String courseName, String courseDescription) {
-        return courseRepository.insertCourse(new Course(courseName, courseDescription));
+    public void insertCourse(String courseName, String courseDescription) {
+        courseRepository.insertCourse(new Course(courseName, courseDescription));
     }
 
     public Course getCourseById(int courseId) {
@@ -174,6 +173,10 @@ public class ManagerService {
 
     public void removeCourse(int courseId) {
         courseRepository.removeCourse(courseId);
+    }
+
+    public ArrayList<Course> getAllCourses() {
+        return courseRepository.getAllCourses();
     }
 
     public void updateCourse(int courseId, Course course) {
@@ -206,8 +209,8 @@ public class ManagerService {
         return catalogueRepository.insertCatalogue(catalogue);
     }
 
-    public int insertCatalogue(String catalogueName, String catalogueDescription, int classYear, String classSymbol, int classSupervisorId) {
-        return catalogueRepository.insertCatalogue(new Catalogue(catalogueName, catalogueDescription, classYear, classSymbol, classSupervisorId));
+    public void insertCatalogue(String catalogueName, String catalogueDescription, int classYear, String classSymbol, int classSupervisorId) {
+        catalogueRepository.insertCatalogue(new Catalogue(catalogueName, catalogueDescription, classYear, classSymbol, classSupervisorId));
     }
 
     public Catalogue getCatalogueById(int catalogueId) {
@@ -216,6 +219,10 @@ public class ManagerService {
 
     public void removeCatalogue(int catalogueId) {
         catalogueRepository.removeCatalogue(catalogueId);
+    }
+
+    public ArrayList<Catalogue> getAllCatalogues() {
+        return catalogueRepository.getAllCatalogues();
     }
 
     public void updateCatalogue(int catalogueId, Catalogue catalogue) {
@@ -270,37 +277,54 @@ public class ManagerService {
         catalogueRepository.updateCatalogue(catalogueId, r);
     }
 
-    public int insertCourseInstance(int catalogueId, int courseId, Collection<Integer> teachersIds, LocalTime startTime, Constants.Days day, int duration) {
+    public void insertCourseInstance(int catalogueId, int courseId, Collection<Integer> teachersIds, LocalTime startTime, Constants.Days day, int duration) {
         Catalogue catalogue = catalogueRepository.getCatalogueById(catalogueId);
         if (catalogue == null) {
-            return -2; // catalogue not found
+            return; // catalogue not found
         }
         Course course = CourseRepository.getCourseById(courseId);
         if (course == null) {
-            return -3; // course not found
+            return; // course not found
         }
 
-        return catalogue.getCourseInstanceRepository().insertCourseInstance(new CourseInstance(catalogue.getCourseInstanceRepository().getCourseInstanceRepositoryId(), course, teachersIds, startTime, day, duration));
+        catalogue.getCourseInstanceRepository().insertCourseInstance(new CourseInstance(catalogue.getCourseInstanceRepository().getCourseInstanceRepositoryId(), course, teachersIds, startTime, day, duration));
+    }
+
+    public CourseInstance getCourseInstanceById(int courseInstanceId) {
+        return CourseInstanceRepository.getCourseInstanceById(courseInstanceId);
+    }
+
+    public void removeCourseInstance(int courseInstanceId) {
+
+        CourseInstance c = CourseInstanceRepository.getCourseInstanceById(courseInstanceId);
+        if (c == null) {
+            return;
+        }
+        CourseInstanceRepository.removeCourseInstance(c);
+    }
+
+    public ArrayList<CourseInstance> getAllCourseInstances() {
+        return CourseInstanceRepository.getAllCourseInstances();
     }
 
     public int insertStudent(Student student) {
         return studentRepository.insertStudent(student);
     }
 
-    public int insertStudent(int catalogueId, String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Constants.Gender gender, String phoneString, int yearOfStudy) {
-        return studentRepository.insertStudent(new Student(catalogueId, firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearOfStudy));
+    public void insertStudent(int catalogueId, String firstName, String lastName, LocalDate dateOfBirth, String address, String email, Constants.Gender gender, String phoneString, int yearOfStudy) {
+        studentRepository.insertStudent(new Student(catalogueId, firstName, lastName, dateOfBirth, address, email, gender, phoneString, yearOfStudy));
     }
 
     public Student getStudentById(int studentId) {
         return studentRepository.getStudentById(studentId);
     }
 
-    public boolean removeStudent(int studentId) {
+    public void removeStudent(int studentId) {
         Student student = studentRepository.getStudentById(studentId);
         if (student == null) {
-            return false;
+            return;
         }
-        return studentRepository.removeStudent(student);
+        studentRepository.removeStudent(student);
     }
 
     public boolean removeStudent(Student student) {

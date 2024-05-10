@@ -2,6 +2,8 @@ package repositories;
 
 import models.Catalogue;
 
+import java.util.ArrayList;
+
 public interface CatalogueRepositoryI {
     int insertCatalogue(Catalogue catalogue);
 
@@ -13,4 +15,5 @@ public interface CatalogueRepositoryI {
 
     void updateCatalogue(int catalogueId, Catalogue catalogue);
 
+    ArrayList<Catalogue> getAllCatalogues();
 }

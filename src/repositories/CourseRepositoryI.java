@@ -2,6 +2,8 @@ package repositories;
 
 import models.Course;
 
+import java.util.ArrayList;
+
 public interface CourseRepositoryI {
     int insertCourse(Course course);
 
@@ -13,4 +15,6 @@ public interface CourseRepositoryI {
     boolean courseExists(int courseId);
 
     void updateCourse(int courseId, Course course);
+
+    ArrayList<Course> getAllCourses();
 }

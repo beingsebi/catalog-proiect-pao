@@ -8,9 +8,13 @@ public interface CourseInstanceRepositoryI {
 
     int insertCourseInstance(CourseInstance courseInstance);
 
-    CourseInstance getCourseInstanceById(int courseInstanceId);
+    static CourseInstance getCourseInstanceById(int courseInstanceId) {
+        return null;
+    }
 
-    boolean removeCourseInstance(CourseInstance courseInstance);
+    static boolean removeCourseInstance(CourseInstance courseInstance) {
+        return false;
+    }
 
     ArrayList<Integer> getAllTeachersIds();
 
