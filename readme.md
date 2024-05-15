@@ -91,7 +91,7 @@
 
 ### Etapa 2:
 
-- [x] baza de date relationala (postgreSQL)
+- :heavy_check_mark: baza de date relationala (postgreSQL)
 - [x] repository pattern
 - [x] servicii care sa foloseasca repository pattern
 - [x] serviciu de audit care scrie intr-un fișier de tip CSV
