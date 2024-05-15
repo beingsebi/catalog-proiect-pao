@@ -1,31 +1,80 @@
 # Catalog scolar - proiect PAO
 
-### Objects
+### Classes
 
-- `CatalogueService`: Singleton service class for managing a catalogue.
-- `Catalogue`: Represents a catalogue with classrooms, students, courses, teachers.
-- `Classroom`: Represents a class of students.
-- `Course`: Represents a course.
-- `CourseInstance`: Represents an instance of a course held by a teacher at a given day and hour every week.
-- `Person`: Represents a person.
-- `Student`: Represents a student, subclass of `Person`.
-- `Teacher`: Represents a teacher, subclass of `Person`.
-- `Constants`: Contains constant values used across the application.
+- Models
+  - `Catalogue`
+  - `Course`
+  - `CourseInstance`
+  - `Person`
+  - `Student` (derivated from `Person`)
+  - `Teacher` (derivated from `Person`)
+- Repositories
+  - `CatalogueRepository`
+  - `CourseInstanceRepository`
+  - `CourseRepository`
+  - `StudentRepository`
+  - `TeacherRepository`
+- Services
+  - `CSVService`
+  - `ManagerService`
+  - `MenuService`
 
 ### Actions:
 
-1. Create the catalogue: `CatalogueService.createCatalogue()`
-2. Add a teacher: `CatalogueService.insertTeacher()`
-3. Add a student: `CatalogueService.insertStudent()`
-4. Add a course: `CatalogueService.insertCourse()`
-5. Add a classroom: `CatalogueService.createClassroom()`
-6. Add a student to a classroom: `CatalogueService.addStudentToClassroom()`
-7. Remove a student from a classroom: `CatalogueService.removeStudentFromClassroom()`
-8. Add a course instance to the timetable: `CatalogueService.addCourseInstanceToTimetable()`
-9. Change catalogue name: `CatalogueService.setCatalogueName()`
-10. Change catalogue description: `CatalogueService.setCatalogueDescription()`
-11. Get a student by ID: `CatalogueService.getStudentById()`
-12. Get a teacher by ID: `CatalogueService.getTeacherById()`
-13. Get a course by ID: `CatalogueService.getCourseById()`
-14. Get a classroom by ID: `CatalogueService.getClassroomById()`
-15. Remove all entries from the timetable: `CatalogueService.resetTimetable()`
+- Exit
+- Insert course
+- Insert teacher
+- Insert catalogue
+- Insert course instance
+- Insert student
+- Remove course
+- Remove teacher
+- Remove catalogue
+- Remove course instance
+- Remove student
+- Get all courses
+- Get all teachers
+- Get all catalogues
+- Get all course instances
+- Get all students
+- Get course by id
+- Get teacher by id
+- Get catalogue by id
+- Get course instance by id
+- Get student by id
+- Update course
+  - Update name
+  - Update description
+- Update teacher
+  - Update first name
+  - Update last name
+  - Update date of birth
+  - Update address
+  - Update email
+  - Update gender
+  - Update phone number
+  - Update years of experience
+  - Update department
+  - Update specialization
+- Update catalogue
+  - Update name
+  - Update description
+  - Update class year
+  - Update class symbol
+  - Update class supervisor
+- Update course instance
+  - Update course id
+  - Update teacher ids
+  - Update start time
+  - Update day
+  - Update duration
+- Update student
+  - Update first name
+  - Update last name
+  - Update date of birth
+  - Update address
+  - Update email
+  - Update gender
+  - Update phone number
+  - Update year of study
