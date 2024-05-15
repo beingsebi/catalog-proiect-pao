@@ -89,16 +89,14 @@
 
 :white_check_mark: utilizare moștenire (student, teacher)
 
-:white_check_mark: clase serviciu
+:white_check_mark: clase serviciu (ManagerService, CSVService, MenuService)
 
-:white_check_mark: clasa main
+:white_check_mark: clasa Main ce expune meniul aplicatiei
 
 ### Etapa 2:
 
 :white_check_mark: baza de date relationala (postgreSQL)
 
-:white_check_mark: repository pattern
+:white_check_mark: repository pattern (CatalogueRepository, CourseRepository, etc.)
 
-:white_check_mark: servicii care sa foloseasca repository pattern
-
-:white_check_mark: serviciu de audit care scrie intr-un fișier de tip CSV
+:white_check_mark: serviciu de audit care scrie intr-un fișier de tip CSV (CSVService)
