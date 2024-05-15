@@ -84,14 +84,14 @@
 ### Etapa 1:
 
 :white_check_mark: clase simple cu atribute private / protected și metode de acces
-- :white_check_mark: cel putin 2 colectii diferite (ArrayList, HashMap)
-- :white_check_mark: utilizare moștenire (student, teacher)
-- :white_check_mark: clase serviciu
-- :white_check_mark: clasa main
+:white_check_mark: cel putin 2 colectii diferite (ArrayList, HashMap)
+:white_check_mark: utilizare moștenire (student, teacher)
+:white_check_mark: clase serviciu
+:white_check_mark: clasa main
 
 ### Etapa 2:
 
-- :heavy_check_mark: baza de date relationala (postgreSQL)
-- :white_check_mark: repository pattern
-- :white_check_mark: servicii care sa foloseasca repository pattern
-- :white_check_mark: serviciu de audit care scrie intr-un fișier de tip CSV
+:heavy_check_mark: baza de date relationala (postgreSQL)
+:white_check_mark: repository pattern
+:white_check_mark: servicii care sa foloseasca repository pattern
+:white_check_mark: serviciu de audit care scrie intr-un fișier de tip CSV
