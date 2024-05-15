@@ -54,6 +54,8 @@ public class CourseInstanceRepository implements CourseInstanceRepositoryI {
                 Collections.addAll(teacherIds, (Integer[]) rs.getArray("teacherIds").getArray());
                 Constants.Days day = Constants.Days.valueOf(rs.getString("day"));
                 courseInstances.add(new CourseInstance(rs.getInt("id"), repoId, course, teacherIds, rs.getTime("startTime").toLocalTime(), day, rs.getInt("duration")));
+                // Collections.sort(courseInstances, new CourseInstanceComparator());
+                // TreeSet<CourseInstance> treeSet = new TreeSet<>(courseInstances);
             }
             con.close();
         } catch (Exception e) {

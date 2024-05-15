@@ -78,3 +78,20 @@
   - Update gender
   - Update phone number
   - Update year of study
+
+## Cerințe
+
+### Etapa 1:
+
+- [x] clase simple cu atribute private / protected și metode de acces
+- [x] cel putin 2 colectii diferite (ArrayList, HashMap)
+- [x] utilizare moștenire (student, teacher)
+- [x] clase serviciu
+- [x] clasa main
+
+### Etapa 2:
+
+- [x] baza de date relationala (postgreSQL)
+- [x] repository pattern
+- [x] servicii care sa foloseasca repository pattern
+- [x] serviciu de audit care scrie intr-un fișier de tip CSV
