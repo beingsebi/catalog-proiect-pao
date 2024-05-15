@@ -95,7 +95,7 @@
 
 ### Etapa 2:
 
-:heavy_check_mark: baza de date relationala (postgreSQL)
+:white_check_mark: baza de date relationala (postgreSQL)
 
 :white_check_mark: repository pattern
 
